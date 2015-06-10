@@ -13,8 +13,6 @@ import (
   "os"
   "os/exec"
   "path"
-  "regexp"
-  "strconv"
   "strings"
   "time"
 )
@@ -36,7 +34,6 @@ const (
   CodeByteSize int = 12
   DefaultStorePath = "/tmp/sneakynote_store"
   DefaultMaxSecretSize int = 1024*16
-  DefaultHeadroom int = (DefaultMaxSecretSize + CodeByteSize + 1) * 3
   DefaultSecretLifetime time.Duration = 10*time.Minute
 )
 
@@ -71,32 +68,10 @@ func Setup() *Store {
     log.Printf("Unmounted ramdisk at %s - you may want to eject it!", storePath)
   }
 
-  // 1 MB
-  DiskPath, err := exec.Command("hdiutil", "attach", "-nomount", "ram://2048").Output()
+  diskPathStr, err := setupRamDisk(storePath)
   if err != nil {
     log.Fatal("Creating ramdisk: ", err)
   }
-  diskPathStr := strings.TrimSpace(string(DiskPath))
-  log.Printf("Created ramdisk at %s", diskPathStr)
-
-  err = exec.Command("newfs_hfs", diskPathStr).Run()
-  if err != nil {
-    log.Fatal("Formatting ramdisk: ", err)
-  }
-  log.Printf("Formatted ramdisk as HFS.")
-
-  if _, err := os.Stat(storePath); os.IsNotExist(err) {
-    err = os.Mkdir(storePath, 0700)
-    if err != nil {
-      log.Fatal("Making dir for ramdisk: ", err)
-    }
-  }
-
-  err = exec.Command("mount", "-t", "hfs", diskPathStr, storePath).Run()
-  if err != nil {
-    log.Fatal("Mounting ramdisk: ", err)
-  }
-  log.Printf("Ramdisk mounted at %s", storePath)
 
   if _, err := os.Stat(beingAccessedPath); os.IsNotExist(err) {
     err = os.Mkdir(beingAccessedPath, 0700)
@@ -129,73 +104,14 @@ func Setup() *Store {
   return &Store{Root: storePath, BeingAccessedPath: beingAccessedPath, AccessedPath: accessedPath, ExpiringPath: expiringPath, ExpiredPath: expiredPath, DiskPath: diskPathStr, Salt: salt, MaxSecretSize: maxSecretSize, Headroom: DefaultHeadroom, SecretLifetime: DefaultSecretLifetime}
 }
 
-func (s *Store) Teardown() error {
-  if s == nil {
-    return errors.New("Can't teardown: store not initialize.")
-  }
-
-  out, err := exec.Command("hdiutil", "detach", "-force", s.DiskPath).CombinedOutput()
-  if err != nil {
-    // Sometimes there's a resource-busy error...sleep and retry
-    time.Sleep(time.Second)
-    out, err = exec.Command("hdiutil", "detach", "-force", s.DiskPath).CombinedOutput()
-  }
-  if err != nil {
-    log.Print("Umounting/ejecting ramdisk: ", err, " ", string(out))
-    return err
-  }
-  log.Printf("Ramdisk %s unmounted and ejected.", s.DiskPath)
-
-  // rm -r is dangerous...
-  if isMatch, _ := regexp.MatchString("\\A/tmp/[^/]+", s.Root); isMatch {
-    out, err = exec.Command("rm", "-r", s.Root).CombinedOutput()
-    // if err != nil {
-    //   // Sometimes there's an error
-    //   time.Sleep(time.Second)
-    //   err = exec.Command("rm", "-r", s.Root).Run()
-      if err != nil {
-        log.Print("rm -r: ", err, " ", string(out))
-        return err
-      }
-    // }
-    log.Printf("Mountpoint folder %s removed.", s.Root)
-  }
-
-  return nil
-}
-
 func (s *Store) AvailableMemory() int {
-  // On Linux with ramfs, just use free system memory minus a threshold
-  // On Mac OS X we can read straigh out of the store
-  df, err := exec.Command("df", s.Root).CombinedOutput()
+  freeBytes, err := s.freeSpace()
   if err != nil {
-    log.Print("Error getting store free space: ", err, string(df))
-    return -1
-  }
-  // log.Print(string(df))
-  // Filesystem 512-blocks Used Available Capacity iused ifree %iused  Mounted on
-  // /dev/disk3       2048  288      1760    15%      34   220   13%   /private/tmp/hello
-
-  regexp, err := regexp.Compile("\\s\\d+\\s")
-  if err != nil {
-    log.Print("Error compiling regexp: ", err)
-    return -1
-  }
-  matches := regexp.FindAll(df, -1)
-  if matches == nil {
-    log.Print("Error matching df output")
+    log.Print("Error determining free space", err)
     return -1
   }
 
-  availableStr := strings.TrimSpace(string(matches[2]))
-  available, err := strconv.ParseInt(availableStr, 10, 64)
-  if err != nil {
-    log.Print("Error parsing available string: ", err)
-    return -1
-  }
-  // log.Print(available * 512)
-
-  return int(available) * 512 - s.Headroom
+  return freeBytes - s.Headroom
 }
 
 func (s *Store) Save(data io.Reader, uuid string) (string, error) {
