@@ -1364,7 +1364,7 @@
           <button id="codesDoNotMatch" class="bad">✘ Codes do not match!</button>
           <button id="yesTheCodesMatch" class="good">✔ Yes, the codes match.</button>
         </div>
-        <p class="info">*Verify the code over the telephone or any channel unlikely to be vulnerable to a <a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attack</a>. Do not use the same communication method you used to send the secret URL.</p>
+        <p class="info">*Verify the code over the telephone or any channel unlikely to be vulnerable to a <a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack" target="_blank">man-in-the-middle attack</a>. Do not use the same communication method you used to send the secret URL.</p>
       </div>
       <div id="badCodeStuff">
         <h2>Consider Secret Compromised</h2>

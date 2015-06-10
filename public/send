@@ -1994,7 +1994,7 @@
           <p>Your recipient has opened the note. Over the telephone, make sure they see this code:*</p>
           <p><span id="noteCode" class="highlightBox"></span></p>
           <p>If the codes match, then the note arrived safely.**</p>
-          <p class="info">*Verify the code over the telephone or any channel unlikely to be vulnerable to a <a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attack</a>. Do not use the same communication method you used to send the secret URL.</p>
+          <p class="info">*Verify the code over the telephone or any channel unlikely to be vulnerable to a <a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack" target="_blank">man-in-the-middle attack</a>. Do not use the same communication method you used to send the secret URL.</p>
           <p class="info">**If the codes do not match, then an attacker has intercepted your original note and sent along their own note instead. Immediately generate a new secret and send a <a href="/send">new SneakyNote</a> over a different channel.</p>
           <p class="thankYou">Thank you for trusting <a href="/">SneakyNote.com</a> to securely send your secret!</p>
         </div>
