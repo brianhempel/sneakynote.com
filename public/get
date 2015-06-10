@@ -263,11 +263,6 @@
         var ciphertextWords = sjcl.codec.arrayBuffer.toBits(ciphertext);
         var aes = new sjcl.cipher.aes(cipherKey);
 
-        console.log(ciphertext.toString());
-        console.log(ciphertextWords);
-        console.log(cipherKey);
-        console.log(iv);
-
         return sjcl.mode.ccm.decrypt(aes, ciphertextWords, iv);
       }
 
