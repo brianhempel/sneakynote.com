@@ -16,8 +16,8 @@ func main() {
   log.Printf("Starting sweeper...")
   StartSweeper()
 
-  log.Printf("Starting SneakyNote server on port 8080!")
-  err := http.ListenAndServe(":8080", Handlers())
+  log.Printf("Starting SneakyNote server on port 80!")
+  err := http.ListenAndServe(":80", Handlers())
   if err != nil {
     log.Fatal("ListenAndServe: ", err)
   }
