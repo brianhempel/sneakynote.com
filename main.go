@@ -4,6 +4,7 @@ import (
   "github.com/brianhempel/sneakynote.com/store"
   "log"
   "net/http"
+  "os"
 )
 
 var mainStore *store.Store
@@ -16,8 +17,14 @@ func main() {
   log.Printf("Starting sweeper...")
   StartSweeper()
 
-  log.Printf("Starting SneakyNote server on port 80!")
-  err := http.ListenAndServe(":80", Handlers())
+  port := os.Getenv("SNEAKYNOTE_PORT")
+
+  if port == "" {
+    port = "8080"
+  }
+
+  log.Printf("Starting SneakyNote server on port " + port + "!")
+  err := http.ListenAndServe(":" + port, Handlers())
   if err != nil {
     log.Fatal("ListenAndServe: ", err)
   }
