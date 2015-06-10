@@ -18,15 +18,26 @@ func main() {
   StartSweeper()
 
   port := os.Getenv("SNEAKYNOTE_PORT")
+  certs := os.Getenv("SNEAKYNOTE_CERTS")
+  privateKey := os.Getenv("SNEAKYNOTE_PRIVATE_KEY")
 
   if port == "" {
     port = "8080"
   }
 
   log.Printf("Starting SneakyNote server on port " + port + "!")
-  err := http.ListenAndServe(":" + port, Handlers())
-  if err != nil {
-    log.Fatal("ListenAndServe: ", err)
+
+  if certs == "" || privateKey == "" {
+    err := http.ListenAndServe(":" + port, Handlers())
+    if err != nil {
+      log.Fatal("ListenAndServe: ", err)
+    }
+  } else {
+    log.Print("Using TLS")
+    err := http.ListenAndServeTLS(":" + port, certs, privateKey, Handlers())
+    if err != nil {
+      log.Fatal("ListenAndServeTLS: ", err)
+    }
   }
 }
 
