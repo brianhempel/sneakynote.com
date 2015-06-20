@@ -251,6 +251,9 @@
           noteExpired();
         } else {
           noteStatusError();
+          window.setTimeout(function () {
+            getNoteStatus(window.noteUuid, window.noteCode, updateNoteStatus);
+          }, 5*1000);
         }
       }
 
@@ -272,7 +275,7 @@
       function noteStatusError() {
         byId("noteStatusText").innerHTML = "Error Retreiving Note Status!";
         byId("noteStatusText").style.color = "#d00";
-        byId("noteStatusIcon").innerHTML = "!!!";
+        byId("noteStatusIcon").innerHTML = "!!";
         byId("noteStatusIcon").style.color = "#d00";
       }
 
