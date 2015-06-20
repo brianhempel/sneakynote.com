@@ -197,14 +197,24 @@ func zeroRequestBuffer(request *http.Request) {
   // log.Printf("type kind %s", bodyType.Kind().String())
 
   bodyPtr := reflect.ValueOf(request.Body)
-  // log.Printf("body value %#v", bodyValue)
-  // log.Printf("body value type %s", bodyValue.Type().String())
-  // log.Printf("body value kind %s", bodyValue.Kind().String())
+  // log.Printf("bodyPtr value %#v", bodyPtr)
+  // log.Printf("bodyPtr value type %s", bodyPtr.Type().String())
+  // log.Printf("bodyPtr value kind %s", bodyPtr.Kind().String())
 
   bodyValue := bodyPtr.Elem()
-  // log.Printf("bodyDeref value %#v", bodyDeref)
-  // log.Printf("bodyDeref value type %s", bodyDeref.Type().String())
-  // log.Printf("bodyDeref value kind %s", bodyDeref.Kind().String())
+  // log.Printf("bodyValue value %#v", bodyValue)
+  // log.Printf("bodyValue value type %s", bodyValue.Type().String())
+  // log.Printf("bodyValue value kind %s", bodyValue.Kind().String())
+
+  // If the client asked for a 100 response then the reader has one extra
+  // wrapper we have to dive through.
+  if (bodyValue.Type().String() == "http.expectContinueReader") {
+    bodyPtr := bodyValue.FieldByName("readCloser").Elem()
+    // log.Printf("bodyPtr value %#v", bodyPtr)
+    // log.Printf("bodyPtr value type %s", bodyPtr.Type().String())
+    // log.Printf("bodyPtr value kind %s", bodyPtr.Kind().String())
+    bodyValue = bodyPtr.Elem()
+  }
 
   bodySrcInt := bodyValue.FieldByName("src")
   // typeOfBodyDeref := bodyDeref.Type()
@@ -250,7 +260,11 @@ func zeroRequestBuffer(request *http.Request) {
 
   bufioBufSlice := bufioBuf.Bytes()
 
+  // log.Printf("slice before: %#v", bufioBufSlice)
+
   zeroBuffer(bufioBufSlice)
+
+  // log.Printf("slice after: %#v", bufioBufSlice)
 
   // drilling further...
 
