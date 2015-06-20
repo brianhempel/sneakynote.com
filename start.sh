@@ -1,4 +1,4 @@
-./stop.sh
+./stop.sh 2> /dev/null
 
 sudo sh -c "SNEAKYNOTE_PORT=443 \
 SNEAKYNOTE_CERTS=/home/sneakynote/src/github.com/brianhempel/sneakynote.com/sneakynote.com.certs \
