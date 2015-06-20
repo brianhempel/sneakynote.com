@@ -244,6 +244,7 @@
         var request = e.target;
 
         if (request.status === 200) {
+          noteStatusUnopened();
           getNoteStatus(window.noteUuid, window.noteCode, updateNoteStatus);
         } else if (request.status == 403) {
           noteOpened();
@@ -255,6 +256,13 @@
             getNoteStatus(window.noteUuid, window.noteCode, updateNoteStatus);
           }, 5*1000);
         }
+      }
+
+      function noteStatusUnopened() {
+        byId("noteStatusText").innerHTML = "Unopened";
+        byId("noteStatusText").style.color = "inherit";
+        byId("noteStatusIcon").innerHTML = '<img src="/images/padlock-small-square.svg">';
+        byId("noteStatusIcon").style.color = "inherit";
       }
 
       function noteOpened() {
