@@ -17,12 +17,17 @@ const (
 )
 
 func setupRamDisk(path string) (string, error) {
+  err := exec.Command("umount", "-f", path).Run()
+  if err == nil {
+    log.Printf("Unmounted ramdisk at %s - you may want to eject it!", path)
+  }
+
   // 1 MB
-  DiskPath, err := exec.Command("hdiutil", "attach", "-nomount", "ram://2048").Output()
+  diskPath, err := exec.Command("hdiutil", "attach", "-nomount", "ram://2048").Output()
   if err != nil {
     log.Fatal("Creating ramdisk: ", err)
   }
-  diskPathStr := strings.TrimSpace(string(DiskPath))
+  diskPathStr := strings.TrimSpace(string(diskPath))
   log.Printf("Created ramdisk at %s", diskPathStr)
 
   err = exec.Command("newfs_hfs", diskPathStr).Run()

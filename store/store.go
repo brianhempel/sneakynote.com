@@ -11,7 +11,6 @@ import (
   "io/ioutil"
   "math/big"
   "os"
-  "os/exec"
   "path"
   "strings"
   "time"
@@ -55,11 +54,6 @@ func Setup() *Store {
   expiringPath := path.Join(storePath, "expiring")
   expiredPath := path.Join(storePath, "expired")
   maxSecretSize := DefaultMaxSecretSize
-
-  err = exec.Command("umount", "-f", storePath).Run()
-  if err == nil {
-    log.Printf("Unmounted ramdisk at %s - you may want to eject it!", storePath)
-  }
 
   diskPathStr, err := setupRamDisk(storePath)
   if err != nil {
