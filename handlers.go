@@ -39,6 +39,7 @@ func RedirectToHTTPSHandler() *http.ServeMux {
       response.WriteHeader(http.StatusInternalServerError) // 500
     } else {
       urlCopy.Scheme = "https"
+      log.Printf("Redirecting %s to %s", request.URL.String(), urlCopy.String())
       http.Redirect(response, request, urlCopy.String(), http.StatusMovedPermanently)
     }
   });
