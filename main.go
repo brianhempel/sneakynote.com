@@ -1,6 +1,7 @@
 package main
 
 import (
+  "crypto/tls"
   "github.com/brianhempel/sneakynote.com/store"
   "log"
   "net/http"
@@ -54,10 +55,32 @@ func StartServer() {
   } else {
     go http.ListenAndServe(":80", RedirectToHTTPSHandler())
     log.Print("Using TLS")
-    err := http.ListenAndServeTLS(":" + port, certs, privateKey, AddHSTSHeader(Handlers()))
+    server := &http.Server{
+      Addr:      ":" + port,
+      Handler:   AddHSTSHeader(Handlers()),
+      TLSConfig: TLSConfig(),
+    }
+    err := server.ListenAndServeTLS(certs, privateKey)
     if err != nil {
       log.Fatal("ListenAndServeTLS: ", err)
     }
+  }
+}
+
+func TLSConfig() *tls.Config {
+  return &tls.Config{
+    MinVersion: tls.VersionTLS10,
+    PreferServerCipherSuites: true,
+    CipherSuites: []uint16{
+      tls.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+      tls.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+      tls.TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
+      tls.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+      tls.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
+      tls.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+      tls.TLS_RSA_WITH_AES_256_CBC_SHA,
+      tls.TLS_RSA_WITH_AES_128_CBC_SHA,
+    },
   }
 }
 
