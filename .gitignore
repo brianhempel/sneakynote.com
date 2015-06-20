@@ -2,5 +2,6 @@ sneakynote.com
 sneakynote.com.key
 sneakynote.com.certs
 sneakynote.com.csr
-sneakynote_com
+certificates/
 public/log.txt
+*.pid
