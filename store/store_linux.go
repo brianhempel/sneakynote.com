@@ -26,7 +26,7 @@ func setupRamDisk(path string) (error) {
   //   log.Printf("Unmounted ramdisk at %s!", path)
   // }
 
-  err = os.MkdirAll(path, 0700)
+  err := os.MkdirAll(path, 0700)
   if err != nil {
     log.Fatal("Creating ramdisk folder: ", err)
   }
