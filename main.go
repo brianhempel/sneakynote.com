@@ -54,7 +54,7 @@ func StartServer() {
   } else {
     go http.ListenAndServe(":80", RedirectToHTTPSHandler())
     log.Print("Using TLS")
-    err := http.ListenAndServeTLS(":" + port, certs, privateKey, Handlers())
+    err := http.ListenAndServeTLS(":" + port, certs, privateKey, AddHSTSHeader(Handlers()))
     if err != nil {
       log.Fatal("ListenAndServeTLS: ", err)
     }

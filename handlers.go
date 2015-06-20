@@ -29,6 +29,14 @@ func Handlers() *http.ServeMux {
   return mux;
 }
 
+func AddHSTSHeader(original http.Handler) http.Handler {
+  return http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
+    // 2 Years
+    response.Header()["Strict-Transport-Security"] = []string{"max-age=63072000; includeSubDomains; preload"}
+    original.ServeHTTP(response, request)
+  })
+}
+
 func RedirectToHTTPSHandler() *http.ServeMux {
   mux := http.NewServeMux()
   mux.HandleFunc("/", func(response http.ResponseWriter, request *http.Request) {
