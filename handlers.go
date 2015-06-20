@@ -37,14 +37,12 @@ func AddHSTSHeader(original http.Handler) http.Handler {
   })
 }
 
-func RedirectToHTTPSHandler() *http.ServeMux {
-  mux := http.NewServeMux()
-  mux.HandleFunc("/", func(response http.ResponseWriter, request *http.Request) {
+func RedirectToHTTPSHandler() http.Handler {
+  return http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
     newURL := "https://sneakynote.com" + request.URL.String()
     // log.Printf("Redirecting %s to %s", request.URL.String(), newURL)
     http.Redirect(response, request, newURL, http.StatusMovedPermanently)
-  });
-  return mux
+  })
 }
 
 func note(response http.ResponseWriter, request *http.Request) {
