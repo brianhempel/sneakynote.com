@@ -24,7 +24,6 @@ type Store struct {
   ExpiringPath string
   ExpiredPath string
   DiskPath string
-  Salt []byte
   MaxSecretSize int
   Headroom int
   SecretLifetime time.Duration
@@ -56,12 +55,6 @@ func Setup() *Store {
   expiringPath := path.Join(storePath, "expiring")
   expiredPath := path.Join(storePath, "expired")
   maxSecretSize := DefaultMaxSecretSize
-
-  salt := make([]byte, 16)
-  _, err := rand.Read(salt)
-  if err != nil {
-    log.Fatal("Error initialize store salt:", err)
-  }
 
   err = exec.Command("umount", "-f", storePath).Run()
   if err == nil {
@@ -101,7 +94,7 @@ func Setup() *Store {
     }
   }
 
-  return &Store{Root: storePath, BeingAccessedPath: beingAccessedPath, AccessedPath: accessedPath, ExpiringPath: expiringPath, ExpiredPath: expiredPath, DiskPath: diskPathStr, Salt: salt, MaxSecretSize: maxSecretSize, Headroom: DefaultHeadroom, SecretLifetime: DefaultSecretLifetime}
+  return &Store{Root: storePath, BeingAccessedPath: beingAccessedPath, AccessedPath: accessedPath, ExpiringPath: expiringPath, ExpiredPath: expiredPath, DiskPath: diskPathStr, MaxSecretSize: maxSecretSize, Headroom: DefaultHeadroom, SecretLifetime: DefaultSecretLifetime}
 }
 
 func (s *Store) AvailableMemory() int {
@@ -423,8 +416,7 @@ func (s *Store) UuidToFileName(uuid string) (string) {
     log.Print("Error converting uuid to bytes:", err, " ", uuid)
     return ""
   }
-  saltedId := append(s.Salt, []byte(idBytes)...)
-  hashed := sha256.Sum256(saltedId)
+  hashed := sha256.Sum256(idBytes)
   fileName := hex.EncodeToString(hashed[:])
 
   return fileName

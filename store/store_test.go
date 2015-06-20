@@ -155,8 +155,7 @@ func TestSave(t *testing.T) {
 
   // Test that everything stored correctly
   idBytes, _ := hex.DecodeString(strings.Replace(id, "-", "", -1))
-  saltedId := append(s.Salt, []byte(idBytes)...)
-  hashed := sha256.Sum256(saltedId)
+  hashed := sha256.Sum256(idBytes)
   fileName := hex.EncodeToString(hashed[:])
   filePath := path.Join(s.Root, fileName)
 
@@ -322,8 +321,7 @@ func TestRetrieve(t *testing.T) {
     t.Error("Error converting uuid to bytes:", err, " ", id)
     return
   }
-  saltedId := append(s.Salt, []byte(idBytes)...)
-  hashed := sha256.Sum256(saltedId)
+  hashed := sha256.Sum256(idBytes)
   fileName := hex.EncodeToString(hashed[:])
   filePath := path.Join(s.Root, fileName)
 
@@ -420,8 +418,7 @@ func TestRetrieveAlreadyAccessed(t *testing.T) {
     t.Error("Error converting uuid to bytes:", err, " ", id)
     return
   }
-  saltedId := append(s.Salt, []byte(idBytes)...)
-  hashed := sha256.Sum256(saltedId)
+  hashed := sha256.Sum256(idBytes)
   fileName := hex.EncodeToString(hashed[:])
   accesedFilePath := path.Join(s.AccessedPath, fileName)
 
@@ -456,8 +453,7 @@ func TestRetrieveSecretOld(t *testing.T) {
     t.Error("Error converting uuid to bytes:", err, " ", id)
     return
   }
-  saltedId := append(s.Salt, []byte(idBytes)...)
-  hashed := sha256.Sum256(saltedId)
+  hashed := sha256.Sum256(idBytes)
   fileName := hex.EncodeToString(hashed[:])
   filePath := path.Join(s.Root, fileName)
 
@@ -498,8 +494,7 @@ func TestRetrieveExpired(t *testing.T) {
     t.Error("Error converting uuid to bytes:", err, " ", id)
     return
   }
-  saltedId := append(s.Salt, []byte(idBytes)...)
-  hashed := sha256.Sum256(saltedId)
+  hashed := sha256.Sum256(idBytes)
   fileName := hex.EncodeToString(hashed[:])
   expiredFilePath := path.Join(s.ExpiredPath, fileName)
 
@@ -556,8 +551,7 @@ func TestStatusUnopened(t *testing.T) {
     t.Error("Error converting uuid to bytes:", err, " ", id)
     return
   }
-  saltedId := append(s.Salt, []byte(idBytes)...)
-  hashed := sha256.Sum256(saltedId)
+  hashed := sha256.Sum256(idBytes)
   fileName := hex.EncodeToString(hashed[:])
   filePath := path.Join(s.Root, fileName)
 
@@ -597,8 +591,7 @@ func TestStatusAlreadyAccessed(t *testing.T) {
     t.Error("Error converting uuid to bytes:", err, " ", id)
     return
   }
-  saltedId := append(s.Salt, []byte(idBytes)...)
-  hashed := sha256.Sum256(saltedId)
+  hashed := sha256.Sum256(idBytes)
   fileName := hex.EncodeToString(hashed[:])
   accesedFilePath := path.Join(s.AccessedPath, fileName)
 
@@ -639,8 +632,7 @@ func TestStatusSecretOld(t *testing.T) {
     t.Error("Error converting uuid to bytes:", err, " ", id)
     return
   }
-  saltedId := append(s.Salt, []byte(idBytes)...)
-  hashed := sha256.Sum256(saltedId)
+  hashed := sha256.Sum256(idBytes)
   fileName := hex.EncodeToString(hashed[:])
   filePath := path.Join(s.Root, fileName)
 
@@ -684,8 +676,7 @@ func TestStatusExpired(t *testing.T) {
     t.Error("Error converting uuid to bytes:", err, " ", id)
     return
   }
-  saltedId := append(s.Salt, []byte(idBytes)...)
-  hashed := sha256.Sum256(saltedId)
+  hashed := sha256.Sum256(idBytes)
   fileName := hex.EncodeToString(hashed[:])
   expiredFilePath := path.Join(s.ExpiredPath, fileName)
 
