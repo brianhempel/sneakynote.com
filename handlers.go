@@ -5,6 +5,7 @@ import (
   "github.com/brianhempel/sneakynote.com/store"
   "path"
   "net/http"
+  "net/url"
   "regexp"
   "log"
   "strconv"
@@ -27,6 +28,21 @@ func Handlers() *http.ServeMux {
   mux.HandleFunc("/notes/", note)
 
   return mux;
+}
+
+func RedirectToHTTPSHandler() *http.ServeMux {
+  mux := http.NewServeMux()
+  mux.HandleFunc("/", func(response http.ResponseWriter, request *http.Request) {
+    urlCopy, err := url.ParseRequestURI(request.URL.String())
+    if err != nil {
+      log.Print("HTTPS Redirector returning 500: ", err)
+      response.WriteHeader(http.StatusInternalServerError) // 500
+    } else {
+      urlCopy.Scheme = "https"
+      http.Redirect(response, request, urlCopy.String(), http.StatusMovedPermanently)
+    }
+  });
+  return mux
 }
 
 func note(response http.ResponseWriter, request *http.Request) {
