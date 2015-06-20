@@ -3,6 +3,7 @@
   <head>
     <title>SneakyNote: Send Secrets Securely</title>
     <link rel="icon" type="image/png" href="/images/padlock-small-square.png" />
+    <meta name="robots" content="noindex">
     <style>
       body {
         margin: 0 auto;
