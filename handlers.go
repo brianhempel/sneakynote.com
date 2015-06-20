@@ -33,15 +33,9 @@ func Handlers() *http.ServeMux {
 func RedirectToHTTPSHandler() *http.ServeMux {
   mux := http.NewServeMux()
   mux.HandleFunc("/", func(response http.ResponseWriter, request *http.Request) {
-    urlCopy, err := url.ParseRequestURI(request.URL.String())
-    if err != nil {
-      log.Print("HTTPS Redirector returning 500: ", err)
-      response.WriteHeader(http.StatusInternalServerError) // 500
-    } else {
-      urlCopy.Scheme = "https"
-      log.Printf("Redirecting %s to %s", request.URL.String(), urlCopy.String())
-      http.Redirect(response, request, urlCopy.String(), http.StatusMovedPermanently)
-    }
+    newURL := "https://sneakynote.com" + request.URL.String()
+    log.Printf("Redirecting %s to %s", request.URL.String(), newURL)
+    http.Redirect(response, request, newURL, http.StatusMovedPermanently)
   });
   return mux
 }
