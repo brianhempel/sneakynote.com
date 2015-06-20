@@ -5,7 +5,6 @@ import (
   "github.com/brianhempel/sneakynote.com/store"
   "path"
   "net/http"
-  "net/url"
   "regexp"
   "log"
   "strconv"
