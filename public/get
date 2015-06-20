@@ -30,6 +30,9 @@
       #compromised {
         display: none;
       }
+      #expired {
+        display: none;
+      }
       #compromised h2,
       #badCodeStuff h2 {
         color: #d00;
