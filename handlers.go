@@ -24,8 +24,6 @@ func Handlers() *http.ServeMux {
 
   mux.Handle("/", http.FileServer(http.Dir(publicPath())))
 
-  // mux.HandleFunc("/send", send)
-  // mux.HandleFunc("/get", get)
   mux.HandleFunc("/notes/", note)
 
   return mux;
@@ -55,17 +53,6 @@ func noteStatus(response http.ResponseWriter, request *http.Request) {
   default: http.NotFoundHandler().ServeHTTP(response, request)
   }
 }
-
-//
-// func getSend(response http.ResponseWriter, request *http.Request) {
-//   file := path.Join(publicPath(), "send.html")
-//   http.ServeFile(response, request, file)
-// }
-//
-// func getGet(response http.ResponseWriter, request *http.Request) {
-//   file := path.Join(publicPath(), "get.html")
-//   http.ServeFile(response, request, file)
-// }
 
 func postNote(response http.ResponseWriter, request *http.Request) {
   defer zeroRequestBuffer(request)
