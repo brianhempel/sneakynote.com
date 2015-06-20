@@ -26,22 +26,12 @@ func TestSetup(t *testing.T) {
   }
   hdiutilInfoStr := string(hdiutilInfo)
 
-  if !strings.Contains(hdiutilInfoStr, s.DiskPath) {
-    t.Errorf("Expected %s to be linked. hdiutil output: %s", s.DiskPath, hdiutilInfoStr)
-  }
-
-  if _, err = os.Stat(s.Root); os.IsNotExist(err) {
-    t.Errorf("Expected folder %s to exist", s.Root)
-  }
-
   if !strings.Contains(hdiutilInfoStr, s.Root) {
     t.Errorf("Expected %s to be linked. hdiutil output: %s", s.Root, hdiutilInfoStr)
   }
 
-  r, _ := regexp.Compile("(" + s.DiskPath + ")\\s+/private(" + s.Root + ")")
-  matches := r.FindStringSubmatch(hdiutilInfoStr)
-  if len(matches) != 3 {
-    t.Errorf("Expected %s to be linked to %s. hdiutil output: %s", s.DiskPath, s.Root, hdiutilInfoStr)
+  if _, err = os.Stat(s.Root); os.IsNotExist(err) {
+    t.Errorf("Expected folder %s to exist", s.Root)
   }
 
   testFilePath := path.Join(s.Root, "test_file")
@@ -99,8 +89,8 @@ func TestTeardown(t *testing.T) {
   }
   hdiutilInfoStr := string(hdiutilInfo)
 
-  if matched, _ := regexp.MatchString(s.DiskPath + "\\b", hdiutilInfoStr); matched {
-    t.Errorf("Expected %s to be ejected. hdiutil output: %s", s.DiskPath, hdiutilInfoStr)
+  if matched, _ := regexp.MatchString(s.Root + "\\b", hdiutilInfoStr); matched {
+    t.Errorf("Expected %s to be ejected. hdiutil output: %s", s.Root, hdiutilInfoStr)
   }
 }
 

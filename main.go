@@ -10,9 +10,28 @@ import (
 var mainStore *store.Store
 
 func main() {
-  log.Printf("Setting up datastore...")
-  SetupStore()
-  defer TeardownStore()
+  if len(os.Args) == 1 {
+    StartServer()
+  } else if os.Args[1] == "setup" {
+    SetupStore()
+  } else if os.Args[1] == "teardown" {
+    TeardownStore()
+  } else {
+    log.Print("Invalid argument ", os.Args[1])
+    log.Print("  ")
+    log.Print("No arguments starts the server.")
+    log.Print("  ")
+    log.Print("./sneakynote.com setup")
+    log.Print("will set up the datastore.")
+    log.Print("  ")
+    log.Print("./sneakynote.com teardown")
+    log.Print("will tear down the datastore.")
+    os.Exit(1)
+  }
+}
+
+func StartServer() {
+  MaybeSetupStore()
 
   log.Printf("Starting sweeper...")
   StartSweeper()
@@ -41,11 +60,28 @@ func main() {
   }
 }
 
+func GetStore() {
+  mainStore = store.Get()
+}
+
+func MaybeSetupStore() {
+  if _, err := os.Stat(store.Get().ExpiredPath); os.IsNotExist(err) {
+    SetupStore()
+  } else {
+    GetStore()
+  }
+}
+
 func SetupStore() {
+  log.Printf("Setting up datastore...")
   mainStore = store.Setup()
 }
 
 func TeardownStore() {
+  log.Printf("Tearing down datastore...")
+  if mainStore == nil {
+    GetStore()
+  }
   mainStore.Teardown()
 }
 

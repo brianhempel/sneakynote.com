@@ -22,7 +22,6 @@ type Store struct {
   AccessedPath string
   ExpiringPath string
   ExpiredPath string
-  DiskPath string
   MaxSecretSize int
   Headroom int
   SecretLifetime time.Duration
@@ -47,7 +46,7 @@ var (
   SecretNotFound = errors.New("Secret not found")
 )
 
-func Setup() *Store {
+func Get() *Store {
   storePath := DefaultStorePath
   beingAccessedPath := path.Join(storePath, "being_accessed")
   accessedPath := path.Join(storePath, "accessed")
@@ -55,40 +54,46 @@ func Setup() *Store {
   expiredPath := path.Join(storePath, "expired")
   maxSecretSize := DefaultMaxSecretSize
 
-  diskPathStr, err := setupRamDisk(storePath)
+  return &Store{Root: storePath, BeingAccessedPath: beingAccessedPath, AccessedPath: accessedPath, ExpiringPath: expiringPath, ExpiredPath: expiredPath, MaxSecretSize: maxSecretSize, Headroom: DefaultHeadroom, SecretLifetime: DefaultSecretLifetime}
+}
+
+func Setup() *Store {
+  s := Get()
+
+  err := setupRamDisk(s.Root)
   if err != nil {
     log.Fatal("Creating ramdisk: ", err)
   }
 
-  if _, err := os.Stat(beingAccessedPath); os.IsNotExist(err) {
-    err = os.Mkdir(beingAccessedPath, 0700)
+  if _, err := os.Stat(s.BeingAccessedPath); os.IsNotExist(err) {
+    err = os.Mkdir(s.BeingAccessedPath, 0700)
     if err != nil {
       log.Fatal("Making being_accessed dir for store: ", err)
     }
   }
 
-  if _, err := os.Stat(accessedPath); os.IsNotExist(err) {
-    err = os.Mkdir(accessedPath, 0700)
+  if _, err := os.Stat(s.AccessedPath); os.IsNotExist(err) {
+    err = os.Mkdir(s.AccessedPath, 0700)
     if err != nil {
       log.Fatal("Making accessed dir for store: ", err)
     }
   }
 
-  if _, err := os.Stat(expiredPath); os.IsNotExist(err) {
-    err = os.Mkdir(expiringPath, 0700)
+  if _, err := os.Stat(s.ExpiredPath); os.IsNotExist(err) {
+    err = os.Mkdir(s.ExpiringPath, 0700)
     if err != nil {
       log.Fatal("Making expiring dir for store: ", err)
     }
   }
 
-  if _, err := os.Stat(expiredPath); os.IsNotExist(err) {
-    err = os.Mkdir(expiredPath, 0700)
+  if _, err := os.Stat(s.ExpiredPath); os.IsNotExist(err) {
+    err = os.Mkdir(s.ExpiredPath, 0700)
     if err != nil {
       log.Fatal("Making expired dir for store: ", err)
     }
   }
 
-  return &Store{Root: storePath, BeingAccessedPath: beingAccessedPath, AccessedPath: accessedPath, ExpiringPath: expiringPath, ExpiredPath: expiredPath, DiskPath: diskPathStr, MaxSecretSize: maxSecretSize, Headroom: DefaultHeadroom, SecretLifetime: DefaultSecretLifetime}
+  return s
 }
 
 func (s *Store) AvailableMemory() int {

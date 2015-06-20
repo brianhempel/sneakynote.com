@@ -16,7 +16,7 @@ const (
   DefaultHeadroom int = (DefaultMaxSecretSize + CodeByteSize + 1) * 3
 )
 
-func setupRamDisk(path string) (string, error) {
+func setupRamDisk(path string) (error) {
   err := exec.Command("umount", "-f", path).Run()
   if err == nil {
     log.Printf("Unmounted ramdisk at %s - you may want to eject it!", path)
@@ -49,21 +49,21 @@ func setupRamDisk(path string) (string, error) {
   }
   log.Printf("Ramdisk mounted at %s", path)
 
-  return diskPathStr, nil
+  return nil
 }
 
 func (s *Store) Teardown() error {
-  out, err := exec.Command("hdiutil", "detach", "-force", s.DiskPath).CombinedOutput()
+  out, err := exec.Command("hdiutil", "detach", "-force", s.Root).CombinedOutput()
   if err != nil {
     // Sometimes there's a resource-busy error...sleep and retry
     time.Sleep(time.Second)
-    out, err = exec.Command("hdiutil", "detach", "-force", s.DiskPath).CombinedOutput()
+    out, err = exec.Command("hdiutil", "detach", "-force", s.Root).CombinedOutput()
   }
   if err != nil {
     log.Print("Umounting/ejecting ramdisk: ", err, " ", string(out))
     return err
   }
-  log.Printf("Ramdisk %s unmounted and ejected.", s.DiskPath)
+  log.Printf("Ramdisk %s unmounted and ejected.", s.Root)
 
   // rm -r is dangerous...
   if isMatch, _ := regexp.MatchString("\\A/tmp/[^/]+", s.Root); isMatch {
