@@ -47,14 +47,12 @@ func StartServer() {
   log.Printf("Starting SneakyNote server on port " + port + "!")
 
   if certs == "" || privateKey == "" {
-    go func {
-      http.ListenAndServe(":80", RedirectToHTTPSHandler())
-    }
     err := http.ListenAndServe(":" + port, Handlers())
     if err != nil {
       log.Fatal("ListenAndServe: ", err)
     }
   } else {
+    go http.ListenAndServe(":80", RedirectToHTTPSHandler())
     log.Print("Using TLS")
     err := http.ListenAndServeTLS(":" + port, certs, privateKey, Handlers())
     if err != nil {
