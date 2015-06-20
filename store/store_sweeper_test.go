@@ -102,7 +102,7 @@ func TestSweepSecrets(t *testing.T) {
   makeFile(s.Root, "old1", "234 567 abcd\n", 10, 0600)
   makeFile(s.Root, "old2", "234 567 abcd\nsecret", 11, 0600)
 
-  err := s.SweepSecrets()
+  err := s.SweepSecrets(10 * time.Minute)
   if err != nil {
     t.Error("Sweep secrets errored:", err)
   }
@@ -183,7 +183,7 @@ func TestSweepBeingAccessed(t *testing.T) {
   os.Chtimes(path.Join(s.BeingAccessedPath, "old1"), time.Now(), time.Now().Add(-11*time.Minute))
   os.Chtimes(path.Join(s.BeingAccessedPath, "old2"), time.Now(), time.Now().Add(-12*time.Minute))
 
-  err := s.SweepBeingAccessed()
+  err := s.SweepBeingAccessed(11 * time.Minute)
   if err != nil {
     t.Error("Sweep being accessed errored:", err)
   }

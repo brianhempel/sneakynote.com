@@ -16,12 +16,12 @@ func (s *Store) SweepContinuously() {
 }
 
 func (s *Store) Sweep() error {
-  err := s.SweepSecrets()
+  err := s.SweepSecrets(s.SecretLifetime)
   if err != nil {
     return err
   }
 
-  err = s.SweepBeingAccessed()
+  err = s.SweepBeingAccessed(s.SecretLifetime + time.Minute)
   if err != nil {
     return err
   }
@@ -44,7 +44,7 @@ func (s *Store) Sweep() error {
   return nil
 }
 
-func (s *Store) SweepSecrets() error {
+func (s *Store) SweepSecrets(maxAge time.Duration) error {
   files, err := ioutil.ReadDir(s.Root)
 
   if err != nil {
@@ -52,7 +52,7 @@ func (s *Store) SweepSecrets() error {
     return err
   }
 
-  cutoff := time.Now().Add(-s.SecretLifetime)
+  cutoff := time.Now().Add(-maxAge)
 
   for _, fileInfo := range files {
     if !fileInfo.IsDir() && fileInfo.ModTime().Before(cutoff) {
@@ -91,9 +91,9 @@ func (s *Store) SweepSecrets() error {
 }
 
 // This folder shouldn't have leftovers, but just in case...
-func (s *Store) SweepBeingAccessed() error {
+func (s *Store) SweepBeingAccessed(maxAge time.Duration) error {
   // One minute to read the secret should be more than plenty
-  return sweepFolder(s.BeingAccessedPath, s.SecretLifetime + time.Minute)
+  return sweepFolder(s.BeingAccessedPath, maxAge)
 }
 
 func (s *Store) SweepAccessed() error {

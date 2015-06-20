@@ -60,6 +60,10 @@ func Get() *Store {
 func Setup() *Store {
   s := Get()
 
+  if _, err := os.Stat(s.Root); !os.IsNotExist(err) {
+    s.Teardown()
+  }
+
   err := setupRamDisk(s.Root)
   if err != nil {
     log.Fatal("Creating ramdisk: ", err)
@@ -94,6 +98,13 @@ func Setup() *Store {
   }
 
   return s
+}
+
+func (s *Store) Teardown() error {
+  s.SweepSecrets(-100000 * time.Hour)
+  s.SweepBeingAccessed(-100000 * time.Hour)
+
+  return teardownRamDisk(s.Root)
 }
 
 func (s *Store) AvailableMemory() int {

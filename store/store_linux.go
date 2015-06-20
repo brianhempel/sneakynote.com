@@ -21,10 +21,10 @@ var (
 )
 
 func setupRamDisk(path string) (error) {
-  err := exec.Command("sudo", "umount", path).Run()
-  if err == nil {
-    log.Printf("Unmounted ramdisk at %s!", path)
-  }
+  // err := exec.Command("sudo", "umount", path).Run()
+  // if err == nil {
+  //   log.Printf("Unmounted ramdisk at %s!", path)
+  // }
 
   err = os.MkdirAll(path, 0700)
   if err != nil {
@@ -40,32 +40,32 @@ func setupRamDisk(path string) (error) {
   return nil
 }
 
-func (s *Store) Teardown() error {
-  out, err := exec.Command("sudo", "umount", s.Root).CombinedOutput()
+func teardownRamDisk(path string) error {
+  out, err := exec.Command("sudo", "umount", path).CombinedOutput()
   if err != nil {
     // Sometimes there's a resource-busy error...sleep and retry
     time.Sleep(time.Second)
-    out, err = exec.Command("sudo", "umount", s.Root).CombinedOutput()
+    out, err = exec.Command("sudo", "umount", path).CombinedOutput()
   }
   if err != nil {
     log.Print("Umounting/ejecting ramdisk: ", err, " ", string(out))
     return err
   }
-  log.Printf("Ramdisk %s unmounted and ejected.", s.Root)
+  log.Printf("Ramdisk %s unmounted and ejected.", path)
 
   // rm -r is dangerous...
-  if isMatch, _ := regexp.MatchString("\\A/tmp/[^/]+", s.Root); isMatch {
-    out, err = exec.Command("rm", "-r", s.Root).CombinedOutput()
+  if isMatch, _ := regexp.MatchString("\\A/tmp/[^/]+", path); isMatch {
+    out, err = exec.Command("rm", "-r", path).CombinedOutput()
     // if err != nil {
     //   // Sometimes there's an error
     //   time.Sleep(time.Second)
-    //   err = exec.Command("rm", "-r", s.Root).Run()
+    //   err = exec.Command("rm", "-r", path).Run()
       if err != nil {
         log.Print("rm -r: ", err, " ", string(out))
         return err
       }
     // }
-    log.Printf("Mountpoint folder %s removed.", s.Root)
+    log.Printf("Mountpoint folder %s removed.", path)
   }
 
   return nil
