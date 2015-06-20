@@ -150,7 +150,8 @@
           byId("retreiveStatus").innerHTML = "This SneakyNote has already been read!"
           byId("compromised").style.display = "block";
         } else if (request.status === 410) {
-          byId("retreiveStatus").innerHTML = "This SneakyNote has expired. Ask the sender to send a new SneakyNote."
+          byId("retreiveStatus").innerHTML = "This SneakyNote has expired."
+          byId("expired").style.display = "block";
         } else if (request.status === 404) {
           byId("retreiveStatus").innerHTML = "Could not find this SneakyNote. It could be more than one day old."
           byId("compromised").style.display = "block";
@@ -1382,6 +1383,14 @@
         </p>
         <p>
           Generate and <a href="/send">share</a> a new secret immediately!
+        </p>
+      </div>
+      <div id="expired">
+        <p>
+          This SneakyNote was not opened within 10 minutes and has expired without being read. It is no longer available.
+        </p>
+        <p>
+          Ask the sender to send a <a href="/send">new SneakyNote</a>.
         </p>
       </div>
       <div id="noteStuff">
