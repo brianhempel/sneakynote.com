@@ -1,3 +1,7 @@
+# Idempotent
+# Modifies in-place (use git to undo).
+# Usage: ruby anchorize_headers.rb public/index.html
+
 html = File.read(ARGV[0])
 
 out = html.gsub(/<h(\d)>(<a [^<]+>)?([^<]+)(<\/a>)?<\/h\d>/) do |m|
