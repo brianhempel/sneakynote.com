@@ -264,7 +264,7 @@
         byId("verifyNoteCodeStuff").style.display = "block";
 
         var plaintext = sjcl.codec.utf8String.fromBits(plaintextWords);
-        byId("noteContent").innerHTML = plaintext;
+        byId("noteContent").innerHTML = escapeHtml(plaintext);
       }
 
       function demo() {
@@ -359,6 +359,23 @@
         var aes = new sjcl.cipher.aes(cipherKey);
 
         return sjcl.mode.ccm.decrypt(aes, ciphertextWords, iv);
+      }
+
+      // From mustache.js, MIT license.
+      // https://github.com/janl/mustache.js/blob/master/mustache.js
+      function escapeHtml (str) {
+        var entityMap = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;',
+          '/': '&#x2F;'
+        };
+
+        return String(str).replace(/[&<>"'\/]/g, function fromEntityMap (s) {
+          return entityMap[s];
+        });
       }
 
       function getNote(uuid, callback) {
