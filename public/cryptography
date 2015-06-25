@@ -1,0 +1,9 @@
+    <p>
+      A SneakyNote URL provides 160-bit security. Your secret is encrypted with 256-bit <a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a> in <a href="http://en.wikipedia.org/wiki/CCM_mode">CCM mode</a>.
+    </p>
+    <p>
+      We make sure your message never touches a hard disk. And when a SneakyNote is read or expires, we thoroughly erase it from memory.
+    </p>
+
+
+Why no password?

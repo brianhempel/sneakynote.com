@@ -1,0 +1,314 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>How Does It Work? - SneakyNote: Send Secrets Securely</title>
+  <link rel="icon" type="image/png" href="/images/padlock-small-square.png" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="main.css" />
+</head>
+<body>
+
+<section class="bg-solid">
+  <div class="container row">
+    <div class="column center-text">
+      <a href="/"><img id="headerLogo" src="/images/padlock-small-square.svg"></a>
+      <h1>How Does It Work?</h1>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container row center-text">
+    <img class="u-full-width" src="/images/nighttime_highway_lights-1600.jpg" srcset="/images/nighttime_highway_lights-600.jpg 600w, /images/nighttime_highway_lights-800.jpg 800w, /images/nighttime_highway_lights-1000.jpg 1000w, /images/nighttime_highway_lights-1200.jpg 1200w, /images/nighttime_highway_lights-1400.jpg 1400w, /images/nighttime_highway_lights-1600.jpg 1600w, /images/nighttime_highway_lights-1800.jpg 1800w, /images/nighttime_highway_lights-2000.jpg 2000w">
+  </div>
+</section>
+
+<section class="bg-solid">
+  <div class="container row">
+    <h2>The Short Story</h2>
+    <ol>
+      <li>
+        After you type your message, your computer generates a random token, like&nbsp;<code>r9q7ww<wbr>zs<wbr>za<wbr>6t<wbr>qp<wbr>cb<wbr>mm<wbr>dg<wbr>me<wbr>ms<wbr>z8<wbr>mp<wbr>33hmm</code>. Your computer encrypts your message using this token.
+      </li>
+      <li>
+        Your computer sends the encrypted message to SneakyNote.com for storage and then shows you the link for your note, like this:
+        <a class="noteURL" href="/get#r9q7wwzsza6tqpcbmmdgmemsz8mp33hm">https://<wbr>sneakynote.<wbr>com/<wbr>get#r9q7<wbr>ww<wbr>zs<wbr>za<wbr>6t<wbr>qp<wbr>cb<wbr>mm<wbr>dg<wbr>me<wbr>ms<wbr>z8<wbr>mp<wbr>33hm</a>
+      </li>
+      <li>
+        You send the link to your friend over email or chat.
+      </li>
+      <li>
+        Your friend clicks the link. Their computer grabs the encrypted message from SneakyNote.com and uses the token in the link to decrypt the message. Behind the scenes, SneakyNote.com immediately destroys its copy of the encrypted message so nobody else can access the link.
+      </li>
+      <li>
+        Both you and your friend will see a code. The code ensures that the link wasn't replaced by a hacker between your and your friend. After verifying the code with you over the phone, your friend can view your message. Done!
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="container row center-text">
+  	<h2>Learn By Doing</h2>
+    <p>
+      To see how all  this works, try sending a SneakyNote to yourself.
+    </p>
+    <p>
+      <a href="/send" class="button">Send a SneakyNote</a>
+    </p>
+  </div>
+</section>
+
+<section class="bg-solid">
+  <div class="container row">
+    <img class="u-full-width" src="/images/type_set-1600.jpg" srcset="/images/type_set-600.jpg 600w, /images/type_set-800.jpg 800w, /images/type_set-1000.jpg 1000w, /images/type_set-1200.jpg 1200w, /images/type_set-1400.jpg 1400w, /images/type_set-1600.jpg 1600w, /images/type_set-1800.jpg 1800w, /images/type_set-2000.jpg 2000w">
+    <h2>The Long Story</h2>
+    <p>
+      The truth is in the <a href="https://github.com/brianhempel/sneakynote.com">source code</a>, but here's an English language version.
+    </p>
+    <h3>Goals</h3>
+    <p>
+      The system design had a few goals to improve on the existing self-destruction/expiring password sharing services.
+    </p>
+    <ol>
+      <li>The server would never see a plaintext secret.</li>
+      <li>The server would never be able to decrypt a secret.</li>
+      <li>Stored secrets would never touch a hard disk.</li>
+      <li>Stored secrets would expire.</li>
+      <li>Stored secrets would be completely erased from RAM on access or expiry.</li>
+      <li>The cryptography would be sound. (That means no user-generated passwords for protecting the secret.)</li>
+      <li>Open source.</li>
+    </ol>
+    <p>
+      The original design did not imagine a verification code, but it was added to detect <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">MITM attacks</a>. The service can provide no useful guarantees without MITM detection.
+    </p>
+    <h3>Implementation</h3>
+    <p>
+      SneakyNote.com uses the <a href="http://bitwiseshiftleft.github.io/sjcl/">Stanford Javascript Crypto Library (SJCL)</a> to encrypt and decrypt the secret in the web browser.
+    </p>
+    <p>
+      The first step is to generate the token for the url. Most browsers these days implement <code>window.crypto.getRandomValues()</code> which exposes a cryptographically secure random number generator to Javascript. If that is available, SJCL will use that. If not, SJCL falls back to gathering entropy from mouse movements, the accelerometer, key presses, and other signals. If less than 256bits of entropy has been gathered before the user presses "Send", they are presented with a mouse movement/finger press challenge to gather more entropy.
+    </p>
+    <p>
+      When the random number generator is seeded, the sender's browser generates a lowercase base 30 token. The alphabet is the standard alphanumeric base 36, but with <code>0 1 i l o</code> omitted because they are ambiguous, and with <code>u</code> omitted because there is a high probability it might be proceeded by and <code>f</code> and that's a problem if you happen to read the token to someone out loud.
+    </p>
+    <p>
+      The target entropy for the URL token is 160 bits, but because the number of characters in the alphabet is not a power of two, the actual token strength is about 161.9 bits.
+    </p>
+    <p>
+      The 256bit encryption/decryption key is generated by prepending "cipherkey" to the URL token like so <code>cipherkeyr9q7wwzsza6tqpcbmmdgmemsz8mp33hm</code> and hashing it with <a href="https://en.wikipedia.org/wiki/SHA-2">SHA256</a>.
+    </p>
+    <p>
+      An initialization vector is generated similarly, but by prepending "iv" like so <code>ivr9q7wwzsza6tqpcbmmdgmemsz8mp33hm</code> and hashing it with SHA256.
+    </p>
+    <p>
+      The cipher key and initialization vector are used to encrypt the secret message using 256-bit <a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a> in <a href="http://en.wikipedia.org/wiki/CCM_mode">CCM mode</a>. Only the first 88-104bits of the initialization vector are used (depending on the length of the message).
+    </p>
+    <p>
+      The URL token is hashed with SHA256 a third time, prepended by "uuid" like so <code>uuidr9q7wwzsza6tqpcbmmdgmemsz8mp33hm</code>. The result is converted into a valid <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUID</a> like <code>8d6ef9d4-4cd8-4069-be34-f7333986d226</code>.
+    </p>
+    <p>
+      The browser sends a <code>POST</code> request to <code>https://sneakynote.com/notes/8d6ef9d4-4cd8-4069-be34-f7333986d226</code> with the encrypted message in the request body.
+    </p>
+    <p>
+      The SneakyNote.com server is a small app written in <a href="https://golang.org/">Go</a>. For secret storage, it functions as a key-value store. It stores the encrypted secret in a file on a <a href="https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt">ramfs</a> ram disk and sends back a small, randomly generated base 30 code like <code>7pv f69 qkkh</code>. This code has about 49.1 bits of entropy.
+    </p>
+    <p>
+      To prevent remote <a href="https://en.wikipedia.org/wiki/Timing_attack">timing attacks</a>, the file name of the saved encrypted secret is the SHA256 hash of the binary version of the note's UUID.
+    </p>
+    <p>
+      At the end of the request, the server zeros out all of the application buffers that contained the encrypted secret. Go is a garbage-collected language, but GC doesn't erase memory, it only frees it. We must zero the memory because there is no guarantee that the memory will be overwritten any time soon. Due to memory fragmentation, parts of a secret could linger a long time if we did not zero the buffers.
+    </p>
+    <p>
+      The <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a> connection is terminated in-app, not before. (<a href="https://www.ssllabs.com/ssltest/analyze.html?d=sneakynote.com&latest">Run an SSL audit.</a>)
+    </p>
+    <p>
+      After the secret is saved (HTTP status <code>201 Created</code>) the sender's browser presents the SneakyNote link as <code>https://sneakynote.com/get#r9q7wwzsza6tqpcbmmdgmemsz8mp33hm</code> and begins long polling <code>https://sneakynote.com/notes/8d6ef9d4-4cd8-4069-be34-f7333986d226/status</code> for the note status. To ensure that only the sender (and not any middleman who sees the link) can poll this address, the server requires the request to include the code returned when the note was created. However, the note status and/or code is theoretically available to an attacker via a good timing attack.
+    </p>
+    <p>
+      When the recipient (or an attacker) clicks the SneakyNote URL, the browser sends a request for <code>https://sneakynote.com/get</code> to the server. URL fragments (the part after the <code>#</code> sign) are not sent in HTTP requests. This means the URL token <code>r9q7wwzsza6tqpcbmmdgmemsz8mp33hm</code> is NOT sent to the server, so the server is unable to calculate the decryption key.
+    </p>
+    <p>
+      The <code>https://sneakynote.com/get</code> page is static HTML with Javascript. The Javascript immediately looks at the URL token in the fragment and is able to generate a UUID, cipher key, and initialization vector as before.
+    </p>
+    <p>
+      Having determined the UUID from the URL token, the recipient's browser sends a <code>GET</code> request to <code>https://sneakynote.com/notes/8d6ef9d4-4cd8-4069-be34-f7333986d226</code>. The server returns the encrypted secret along with the <code>7pv f69 qkkh</code> code.
+    </p>
+    <p>
+      On secret access, to prevent race conditions the server actually renames the secret file randomly before re-opening the file to read. After reading the encrypted secret, the server zeros the file on the ram disk before unlinking the file, and creates a record noting that this secret was accessed (rather than expiring). The server also zeros the encrypted secret from all application buffers.
+    </p>
+    <p>
+      Having determined the cipher key and initialization vector from the token, the recipient's browser decrypts the secret but hides it on the page, instead displaying the <code>7pv f69 qkkh</code> code for verification.
+    </p>
+    <p>
+      The sender's browser's long poll indicates that the secret was accessed. The sender's browser then also displays the <code>7pv f69 qkkh</code> code for verification.
+    </p>
+    <p>
+      When the recipient indicates that the codes match, the browser displays the decrypted secret.
+    </p>
+    <p>
+      Any further requests to <code>https://sneakynote.com/notes/8d6ef9d4-4cd8-4069-be34-f7333986d226</code> return HTTP status <code>403 Forbidden</code> indicating that the secret has already been read. The server does not have the encrypted secret, all that remains is a small file indicating that UUID has been accessed.
+    </p>
+    <p>
+      To enforce secret expiry, on a <code>GET https://sneakynote.com/notes/8d6ef9d4-4cd8-4069-be34-f7333986d226</code> request the server looks at the modification time of the encrypted secret file and, if the file is older than 10 minutes, returns HTTP status <code>410 Gone</code>.
+    </p>
+    <p>
+      A sweeper runs every minute to zero out and remove any old secrets. A small separate file is left behind to indicate that the secret expired without being accessed.
+    </p>
+    <p>
+      In practice this means that secrets can only be accessed for 10 minutes, but their lifetime in the server's RAM could be up to 11 minutes.
+    </p>
+    <p>
+      Well, that's all the important parts. If you want more details, you'll have to <a href="https://github.com/brianhempel/sneakynote.com">read the source</a> or ask me.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="container row">
+    <img class="u-full-width" src="/images/raven-1600.jpg" srcset="/images/raven-600.jpg 600w, /images/raven-800.jpg 800w, /images/raven-1000.jpg 1000w, /images/raven-1200.jpg 1200w, /images/raven-1400.jpg 1400w, /images/raven-1600.jpg 1600w, /images/raven-1800.jpg 1800w, /images/raven-2000.jpg 2000w">
+    <h2>Threat Models</h2>
+    <p>
+      Because SneakyNote links will most often travel over untrusted channels, the main goal of a SneakyNote is to detect interception rather than prevent it.
+    </p>
+    <p>
+      Ideally, robust interception detection will also discourage attackers from trying to intercept messages. I imagine most attackers do not want the other parties to know they are being watched.
+    </p>
+  </div>
+  <div class="container row">
+    <div class="one-half column">
+      <h4>MITM Greedy Read</h4>
+      <p>
+        If a middleman accesses the secret before the intended recipient, when the recipient clicks the link they will see a "Consider Secret Compromised" message rather than the secret. Both parties can react accordingly.
+      </p>
+      <p>
+        If the sender is watching the status page, they can see when the secret is accessed. A secret accessed too quickly can tip off the sender that something is up.
+      </p>
+      <h4>MITM Greedy Read And Replace</h4>
+      <p>
+        A smarter rouge middleman would not merely read the secret. A smarter middleman will read the secret, generate a new SneakyNote link with the same secret, and substitute the new SneakyNote link into the original communication before forwarding that email/SMS/chat message to the recipient.
+      </p>
+      <p>
+        If the sender is watching the status page, they can see when the secret is accessed. A secret accessed too quickly can tip off the sender that something is up.
+      </p>
+      <p>
+        When the recipient opens the message, they would see the same secret. The message codes, however, will not match.
+      </p>
+      <p>
+        Of course, the parties should verify the code by voice. If the sender and recipient verify the code over the same channel, the middleman can simply swap the code in transit and the codes will look like they match.
+      </p>
+    </div>
+    <div class="one-half column">
+      <h4>MITM Clever Read And Replace</h4>
+      <p>
+        A bad-guy middleman that does not want the note to immediately appear as opened to the sender could replace the SneakyNote link in the communication, long poll the status of the new link, but wait to open the original link until just after the replacement note is opened.
+      </p>
+      <p>
+        The sender will not see the note open early.
+      </p>
+      <p>
+        However, the middleman will not be able to see the original note's code nor the original's secret before creating the replacement. The replacement note will contain a false secret and an entirely different code.
+      </p>
+      <p>
+        If the secret was, for example, a password, then the attacker's only hope for non-detection is to immediately use the password to sign into the service and then change the password to the replacement note's secret. The receiver will then be able to sign into the service.
+      </p>
+      <p>
+        Again, the note verification codes will not match. And, if the middleman changes the password, the sender will not be able to sign into the service under the original password.
+      </p>
+    </div>
+  </div>
+  <div class="container row">
+    <h4>Can Verification Codes Be Brute-forced?</h4>
+    <p>
+      Verification codes are generated randomly by the server (from a cryptographic RNG). The middleman could (with some delay in forwarding the message), attempt to create a lot of SneakyNotes and wait for a code that matches the original. SneakyNote.com may be able to handle 10,000 requests per second. Over 10 minutes of creating SneakyNotes as fast as possible, an attacker has only about a 1 in 100 million chance of getting a code that matches the original message. The attacker only has a 10 minute window before each note expires, so they cannot increase these odds. They could only ever cover 1/100,000,000 of the code space.
+    </p>
+  </div>
+  <div class="container row">
+    <div class="one-half column">
+      <h4>Compromised Server, Eavesdropping Only</h4>
+      <p>If an attacker gains access to the SneakyNote.com server, they could begin copying off encrypted secrets as they arrive at the server.</p>
+      <p>The attacker may be able to see which IP addresses are talking to the server and when, but without the decryption key, the attacker cannot read the secrets.</p>
+      <p>If, however, the attacker also has broad access to snoop global internet traffic, they might begin collecting SneakyNote links they see. They could decrypt any secret for which they also intercepted the SneakyNote link.</p>
+      <p>Bug me to add something here about the most likely methods for an attacker to gain access to the server box.</p>
+    </div>
+    <div class="one-half column">
+      <h4>Compromised Server, New Javascript</h4>
+      <p>If the attacker does not have broad access to snoop other internet traffic, an attacker might instead modify the SneakyNote server to send Javascript that tells the browser to store the secret unencrypted instead—or perhaps more subtle: encrypt the secret with the UUID so the secret still looks encrypted but the attacker can recover the decryption key.</p>
+      <p>In this case, it's a matter of eyes on the Javascript. The attack is in plain sight for anyone who would audit the Javascript or run a diff against GitHub. To make auditing easier, SneakyNote.com does not minify the Javascript.</p>
+    </div>
+  </div>
+  <div class="container row">
+    <div class="one-half column">
+      <h4>Search Warrants Etc.</h4>
+      <p>SneakyNote.com is not able to arbitrarily provide plaintext secrets without compromising our service similar to what an attacker would do.</p>
+      <p>Philosophically, I have no problem per se with cooperating with search warrants that went through due process—there are real bad guys in the world and I don't want SneakyNote.com to be their friend.</p>
+      <p>However, forcing an organization to write new code to compromise their own cryptosystem to honor a search warrant could be a bad precedent.</p>
+      <p>As of yet, SneakyNote.com has received no warrants or similar wiretapping requests.</p>
+    </div>
+    <div class="one-half column">
+      <h4>In Case of A Compromised Server</h4>
+      <p>If I ever become aware of an attacker in the SneakyNote.com server, news will be published on the home page and and on the SneakyNote send and get pages.</p>
+      <p>The service will be taken offline while the attack is resolved. After that, service may or may not resume.</p>
+      <h4>Reporting Security Issues</h4>
+      <p>If you notice a vulnerability in SneakyNote.com, I use <a href="https://en.wikipedia.org/wiki/S/MIME">S/MIME</a>. We can send a few emails back and forth to get that handshake set up, then you can report the vulnerability. <a href="https://www.comodo.com/home/email-security/free-email-certificate.php">Comodo</a> and <a href="https://startssl.com/?app=12">StartCom</a> offer free S/MIME certificates.</p>
+      <p>If the issue is less serious, <a href="https://github.com/brianhempel/sneakynote.com/issues">open an issue</a> or prepare a pull request.</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-solid">
+  <div class="container row center-text">
+  	<h2>Acknowledgements</h2>
+    <p>Cryptography provided by the <a href="http://bitwiseshiftleft.github.io/sjcl/">Stanford Javascript Crypto Library (SJCL)</a></p>
+  	<p>Images by <a href="https://unsplash.com/">Unsplash</a></p>
+  	<p>Built with <a href="http://getskeleton.com/">Skeleton</a></p>
+    <p>Design inspired by <a href="http://html5up.net/photon">Photon</a> from <a href="http://html5up.net/">HTML5 UP</a></p>
+  </div>
+</section>
+
+<section class="rocky-shoreline-bg">
+  <div class="container row center-text">
+  	<h2>Let's Do This</h2>
+    <p>I'm ready to Rijndael all over some UTF-8.</p>
+  	<p>
+  	  <a href="/send" class="button button-primary">Send a SneakyNote</a>
+  	</p>
+  </div>
+</section>
+
+<footer class="bg-solid">
+  <div class="container">
+    <div class="row">
+      <div class="one-half column info u-pull-left">
+        <h4>
+          <a href="/"><img id="footerLogo" src="/images/padlock-small-square.svg">SneakyNote.com</a>
+        </h4>
+      </div>
+      <div class="one-half column u-pull-right links">
+        <a href="/">Home</a><br>
+        <a href="/send">Send</a><br>
+        <a href="/why">Why a SneakyNote?</a><br>
+        <a href="/what_can_i_send">What can I send?</a><br>
+        <a href="/how_does_it_work">How does it work?</a>
+      </div>
+      <div class="one-half column info u-pull-left">
+      	<p>
+      		SneakyNote.com is in the public domain.
+        </p>
+      	<p>
+      		Interested in a firewall install with<br>
+          custom branding? <a href="mailto:brian@sneakynote.com">Contact Me</a>
+      	</p>
+        <p>
+          <a href="https://twitter.com/brianhempel">Twitter</a> ·
+          <a href="https://github.com/brianhempel/sneakynote.com">GitHub</a> ·
+          <a href="mailto:brian@sneakynote.com">Email</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

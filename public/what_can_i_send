@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>What Can I Send? - SneakyNote: Send Secrets Securely</title>
+  <link rel="icon" type="image/png" href="/images/padlock-small-square.png" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="main.css" />
+</head>
+<body>
+
+<section class="bg-solid">
+  <div class="container row">
+    <div class="column center-text">
+      <a href="/"><img id="headerLogo" src="/images/padlock-small-square.svg"></a>
+      <h1>What Can I Send?</h1>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container row">
+    <h2>You Can Safely Send...</h2>
+  </div>
+  <div class="container row">
+    <div class="one-half column">
+      <h4>Passwords</h4>
+      <p>SneakyNote.com was written because I wanted an easy way to send passwords to clients.</p>
+      <p>Just wait until after the SneakyNote arrives safely before you actually change the password on the service.</p>
+    </div>
+    <div class="one-half column">
+      <h4>Public Keys</h4>
+      <p>A SneakyNote is a great way to exchange public keys for PGP or SSH because you can verify that your message wasn't modified.</p>
+      <p>No more snail-mail!</p>
+    </div>
+  </div>
+  <div class="container row">
+    <div class="one-half column">
+      <h4>Bank Account Info</h4>
+      <p>Need to give someone access to your bank account?</p>
+      <p>Split your account info into two or three parts and send each part in a SneakyNote, one after the other.</p>
+    </div>
+    <div class="one-half column">
+      <h4>PGP Messages</h4>
+      <p>If your email account or your recipient's email account is hacked, then your old PGP messages become public when your private key is compromised.</p>
+      <p>Unlike email, SneakyNotes disappear. Send your PGP messages in a SneakyNote so the messages won't be around in the future.</p>
+    </div>
+  </div>
+  <div class="container row center-text">
+	  <a href="/how_does_it_work" class="button">How Does It Work?</a>
+  </div>
+</section>
+
+<section class="city-bg">
+  <div class="container row center-text">
+  	<h2>Safety First</h2>
+    <p>Don't just send an email, send a SneakyNote.</p>
+  	<p>
+  	  <a href="/send" class="button button-primary">Send a SneakyNote</a>
+  	</p>
+  </div>
+</section>
+
+<footer class="bg-solid">
+  <div class="container">
+    <div class="row">
+      <div class="one-half column info u-pull-left">
+        <h4>
+          <a href="/"><img id="footerLogo" src="/images/padlock-small-square.svg">SneakyNote.com</a>
+        </h4>
+      </div>
+      <div class="one-half column u-pull-right links">
+        <a href="/">Home</a><br>
+        <a href="/send">Send</a><br>
+        <a href="/why">Why a SneakyNote?</a><br>
+        <a href="/what_can_i_send">What can I send?</a><br>
+        <a href="/how_does_it_work">How does it work?</a>
+      </div>
+      <div class="one-half column info u-pull-left">
+      	<p>
+      		SneakyNote.com is in the public domain.
+        </p>
+      	<p>
+      		Interested in a firewall install with<br>
+          custom branding? <a href="mailto:brian@sneakynote.com">Contact Me</a>
+      	</p>
+        <p>
+          <a href="https://twitter.com/brianhempel">Twitter</a> ·
+          <a href="https://github.com/brianhempel/sneakynote.com">GitHub</a> ·
+          <a href="mailto:brian@sneakynote.com">Email</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

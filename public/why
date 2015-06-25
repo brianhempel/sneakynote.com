@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Why Send a SneakyNote? - SneakyNote: Send Secrets Securely</title>
+  <link rel="icon" type="image/png" href="/images/padlock-small-square.png" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="main.css" />
+</head>
+<body>
+
+<section class="bg-solid">
+  <div class="container row">
+    <div class="column center-text">
+      <a href="/"><img id="headerLogo" src="/images/padlock-small-square.svg"></a>
+      <h1>Why Send a SneakyNote?</h1>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container row">
+    <div class="one-half column offset-by-three">
+      <table class="u-full-width">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="okay center-text">Email</th>
+            <th class="good center-text">SneakyNote</th>
+            <th class="okay center-text">PGP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Easy</td>
+            <td class="big-mark okay center-text">✔</td>
+            <td class="big-mark good center-text">✔</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Short-lived</td>
+            <td></td>
+            <td class="big-mark good center-text">✔</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Verified Delivery</td>
+            <td></td>
+            <td class="big-mark good center-text">✔</td>
+            <td class="big-mark okay center-text">✔</td>
+          </tr>
+          <tr>
+            <td>Impossible to Intercept</td>
+            <td></td>
+            <td></td>
+            <td class="big-mark okay center-text">✔</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<section class="bg-solid">
+  <div class="container row">
+    <div class="one-half column">
+      <img class="u-full-width" src="/images/bubbles-800.jpg" srcset="/images/bubbles-600.jpg 600w, /images/bubbles-800.jpg 800w">
+      <h4>Easy Security</h4>
+      <p>A SneakyNote is just a link. Just send your friend a SneakyNote link over plain email instead of setting up a system like <a href="http://en.wikipedia.org/wiki/Pretty_Good_Privacy">PGP</a>, <a href="http://en.wikipedia.org/wiki/S/MIME">S/MIME</a>, or <a href="https://www.apple.com/ios/messages/">iMessages</a>.</p>
+      <img class="u-full-width" src="/images/pocket_watch-800.jpg" srcset="/images/pocket_watch-600.jpg 600w, /images/pocket_watch-800.jpg 800w">
+      <h4>Short-lived</h4>
+      <p>Normal email sits around forever waiting for a hacker to steal all your messages, but an unopened SneakyNote link is erased after only 10 minutes. Opened SneakyNotes are erased immediately.</p>
+      <p>If you don't want future bad guys to read your message, <a href="/send">send a SneakyNote</a>.</p>
+    </div>
+    <div class="one-half column">
+      <img class="u-full-width" src="/images/checking_iphone-800.jpg" srcset="/images/checking_iphone-600.jpg 600w, /images/checking_iphone-800.jpg 800w">
+      <h4>Verified Delivery</h4>
+      <p>When your friend opens the message, you both will be presented with a short code. If you see the same code, your message arrived safely.</p>
+      <img class="u-full-width" src="/images/streaking_lights_telephone-800.jpg" srcset="/images/streaking_lights_telephone-600.jpg 600w, /images/streaking_lights_telephone-800.jpg 800w">
+      <h4>No Covert Interception</h4>
+      <p>Though SneakyNote.com can't stop a rouge middleman between you and your friend from reading your secret first, the middleman won't be able to read your secret without you finding out. Just check the code with your friend.</p>
+      <p>If the codes match, only your friend has seen your message.</p>
+    </div>
+  </div>
+  <div class="container row center-text">
+    <a href="/what_can_i_send" class="button">What Can I Send?</a>
+  </div>
+</section>
+
+<section class="rainbow-shoreline-bg">
+  <div class="container row center-text">
+  	<h2>Try It Out</h2>
+    <p>Send a SneakyNote to yourself.</p>
+  	<p>
+  	  <a href="/send" class="button button-primary">Send a SneakyNote</a>
+  	</p>
+  </div>
+</section>
+
+<footer class="bg-solid">
+  <div class="container">
+    <div class="row">
+      <div class="one-half column info u-pull-left">
+        <h4>
+          <a href="/"><img id="footerLogo" src="/images/padlock-small-square.svg">SneakyNote.com</a>
+        </h4>
+      </div>
+      <div class="one-half column u-pull-right links">
+        <a href="/">Home</a><br>
+        <a href="/send">Send</a><br>
+        <a href="/why">Why a SneakyNote?</a><br>
+        <a href="/what_can_i_send">What can I send?</a><br>
+        <a href="/how_does_it_work">How does it work?</a>
+      </div>
+      <div class="one-half column info u-pull-left">
+      	<p>
+      		SneakyNote.com is in the public domain.
+        </p>
+      	<p>
+      		Interested in a firewall install with<br>
+          custom branding? <a href="mailto:brian@sneakynote.com">Contact Me</a>
+      	</p>
+        <p>
+          <a href="https://twitter.com/brianhempel">Twitter</a> ·
+          <a href="https://github.com/brianhempel/sneakynote.com">GitHub</a> ·
+          <a href="mailto:brian@sneakynote.com">Email</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
