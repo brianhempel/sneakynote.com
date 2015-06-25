@@ -185,6 +185,9 @@
       button.bad:hover {
         opacity: 1.0;
       }
+      button#forceShowNote {
+        height: 100px;
+      }
     </style>
     <script>
       "use strict";
@@ -292,6 +295,15 @@
       }
       window.onReadyHandlers.push(function () {
         byId("codesDoNotMatch").onclick = codesDoNotMatch;
+      });
+
+      function forceShowNote(e) {
+        e.preventDefault();
+        byId("badCodeStuff").style.display = "none";
+        codesMatch();
+      }
+      window.onReadyHandlers.push(function () {
+        byId("forceShowNote").onclick = forceShowNote;
       });
 
       function uuidFromUrlKey(urlKey) {
@@ -1480,6 +1492,9 @@
         </p>
         <p>
           Immediately generate and <a href="/send">share</a> a new secret over a different channel!
+        </p>
+        <p>
+          If the codes actually matched and you clicked the wrong button, <a id="forceShowNote" href="#show">click here</a> to see the secret. If the codes did not match you need to take this attack seriously and change the secret.
         </p>
       </div>
       <div id="compromised">
