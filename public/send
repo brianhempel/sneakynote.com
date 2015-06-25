@@ -2028,6 +2028,7 @@
       <h1 id="title">Send a SneakyNote</h1>
 
       <div id="beforeSentStuff">
+        <p>Compose your note in the box below.</p>
         <script>
           // Only show the "Show Text" checkbox if we are on Webkit...
           if(('textSecurity' in document.body.style) || ('webkitTextSecurity' in document.body.style)) {
@@ -2040,6 +2041,7 @@
                   } else {
                     byId("sneakyNoteTextarea").className = "obscured"
                   }
+                  byId("sneakyNoteTextarea").focus();
                 };
             });
           }
