@@ -291,6 +291,7 @@
 
         byId("title").innerHTML = "SneakyNote Ready!";
         byId("noteURL").innerHTML = url;
+        byId("mailTo").href = byId("mailTo").href.replace("URLHERE", url);
         byId("beforeSentStuff").style.display = "none";
         byId("afterSentStuff").style.display = "block";
         window.noteCode = request.getResponseHeader("X-Note-Code");
@@ -2064,6 +2065,9 @@
           <p>
             Your link is valid for the next <span id="noteTimeRemaining">10 minutes</span> only.<br>
             It can only be accessed once.
+          </p>
+          <p>
+            <a id="mailTo" class="button button-primary" href="mailto:?subject=A%20SneakyNote&body=I've%20encrypted%20a%20secret%20message%20for%20you%20using%20SneakyNote.com.%0D%0A%0D%0AVisit%20this%20link%20to%20see%20your%20message:%0D%0A%0D%0AURLHERE%0D%0A%0D%0AYou%20can%20only%20view%20the%20message%20once.%20The%20link%20will%20expire%20in%2010%20minutes.">Click here to email the link</a>
           </p>
           <p>Leave this page open until they read the note.</p>
           <p class="info">
