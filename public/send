@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SneakyNote: Send Secrets Securely</title>
+    <title>SneakyNote.com: Send Secrets Securely</title>
     <link rel="icon" type="image/png" href="/images/padlock-small-square.png" />
     <style>
+      html {
+        font-size: 62.5%;
+      }
       body {
         margin: 0 auto;
         padding: 0;
         text-align: center;
         width: 500px;
-        background-color: #eee;
-        font-family: Helvetica, Arial, sans-serif;
+        background-color: #ccc;
+        font-size: 1.6em;
+        line-height: 1.6;
+        font-weight: 300;
+        font-family: Helvetica, "HelveticaNeue", "Helvetica Neue", Arial, sans-serif;
+        color: #222;
         background-image: url('/images/padlock-small.svg');
+        background-attachment: fixed;
       }
       #content {
         background-color: white;
@@ -22,9 +30,15 @@
         margin-top: 0;
         padding: 0;
         font-size: 47px;
+        font-family: Futura, Helvetica, "HelveticaNeue", "Helvetica Neue", Arial, sans-serif;
+        font-weight: 300;
+        letter-spacing: -.18rem;
       }
-      a, a:visited {
-        color: #00f;
+      a {
+        color: #1EAEDB;
+      }
+      a:hover {
+        color: #0FA0CE;
       }
       label, textarea, button {
         display: inline-block;
@@ -41,6 +55,8 @@
         border: 1px solid gray;
         font-size: 20px;
         margin: 5px 0;
+        font-weight: 300;
+        font-family: Helvetica, "HelveticaNeue", "Helvetica Neue", Arial, sans-serif;
       }
       .obscured {
         text-security: disc;
@@ -56,23 +72,68 @@
         border-radius: 10px;
         font-weight: bold;
       }
+      .button,
+      button,
+      input[type="submit"],
+      input[type="reset"],
+      input[type="button"] {
+        display: inline-block;
+        height: 38px;
+        padding: 0 30px;
+        color: #555;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 38px;
+        letter-spacing: .1rem;
+        text-transform: uppercase;
+        text-decoration: none;
+        white-space: nowrap;
+        background-color: rgba(255,255,255,0.8);
+        border-radius: 4px;
+        border: 1px solid #bbb;
+        cursor: pointer;
+        box-sizing: border-box; }
+      .button:hover,
+      button:hover,
+      input[type="submit"]:hover,
+      input[type="reset"]:hover,
+      input[type="button"]:hover,
+      .button:focus,
+      button:focus,
+      input[type="submit"]:focus,
+      input[type="reset"]:focus,
+      input[type="button"]:focus {
+        color: #333;
+        border-color: #888;
+        outline: 0; }
+      .button.button-primary,
+      button.button-primary,
+      input[type="submit"].button-primary,
+      input[type="reset"].button-primary,
+      input[type="button"].button-primary {
+        color: #FFF;
+        background-color: #33C3F0;
+        border-color: #33C3F0; }
+      .button.button-primary:hover,
+      button.button-primary:hover,
+      input[type="submit"].button-primary:hover,
+      input[type="reset"].button-primary:hover,
+      input[type="button"].button-primary:hover,
+      .button.button-primary:focus,
+      button.button-primary:focus,
+      input[type="submit"].button-primary:focus,
+      input[type="reset"].button-primary:focus,
+      input[type="button"].button-primary:focus {
+        color: #FFF;
+        background-color: #1EAEDB;
+        border-color: #1EAEDB; }
       button {
         width: 460px;
         height: 100px;
         font-size: 34px;
-        background-color: #f6f6f6;
-        background: -webkit-linear-gradient(rgba(144,144,144,0.2), rgba(144,144,144,0.0));
-        background: -o-linear-gradient(rgba(144,144,144,0.2), rgba(144,144,144,0.0));
-        background: -moz-linear-gradient(rgba(144,144,144,0.2), rgba(144,144,144,0.0));
-        background: linear-gradient(rgba(144,144,144,0.2), rgba(144,144,144,0.0));
-        border-radius: 4px;
-        border: 4px outset #ddd;
+        font-family: Helvetica, "HelveticaNeue", "Helvetica Neue", Arial, sans-serif;
       }
-      button:active {
-        background-color: #ddd;
-        border-style: inset;
-      }
-
       #sendingStatus {
         position: relative;
       }
@@ -1991,21 +2052,28 @@
           </div>
           <div id="chaseBall">Hit Me</div>
         </div>
-        <button id="sendButton">Send Securely</button>
+        <button id="sendButton" class="button-primary">Send Securely</button>
       </div>
       <div id="afterSentStuff">
         <p>Note Status: <span id="noteStatus" class="highlightBox"><span id="noteStatusIcon"><img src="/images/padlock-small-square.svg"></span><span id="noteStatusText">Unopened</span></span></p>
         <div id="noteURLStuff">
-          <p>Here is your SneakyNote's secret URL:</p>
+          <p>Here is your SneakyNote's secret link:</p>
           <p><span id="noteURL" class="highlightBox"></span></p>
-          <p>Your URL is selected and ready to copy.</p>
-          <p>Your URL is valid for the next <span id="noteTimeRemaining">10 minutes</span> only. Your URL is safe to email. It can only be accessed once.</p>
+          <p>
+            Your link is valid for the next <span id="noteTimeRemaining">10 minutes</span> only.<br>
+            It can only be accessed once.
+          </p>
+          <p>Leave this page open until they read the note.</p>
+          <p class="info">
+            The link is selected and ready to copy if you<br>
+            want to share it by something other than email.
+          </p>
         </div>
         <div id="noteCodeStuff">
           <p>Your recipient has opened the note. Over the telephone, make sure they see this code:*</p>
           <p><span id="noteCode" class="highlightBox"></span></p>
           <p>If the codes match, then the note arrived safely.**</p>
-          <p class="info">*Verify the code over the telephone or any channel unlikely to be vulnerable to a <a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack" target="_blank">man-in-the-middle attack</a>. Do not use the same communication method you used to send the secret URL.</p>
+          <p class="info">*Verify the code over the telephone or any channel unlikely to be vulnerable to a <a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack" target="_blank">man-in-the-middle attack</a>. Do not use the same communication method you used to send the secret link.</p>
           <p class="info">**If the codes do not match, then an attacker has intercepted your original note and sent along their own note instead. Immediately generate a new secret and send a <a href="/send">new SneakyNote</a> over a different channel.</p>
           <p class="thankYou">Thank you for trusting <a href="/">SneakyNote.com</a> to securely send your secret!</p>
         </div>

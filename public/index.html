@@ -1,160 +1,101 @@
 <!DOCTYPE HTML>
-<!--
-	Photon by HTML5 UP
-	html5up.net | @n33co
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
-	<head>
-    <title>SneakyNote: Send Secrets Securely</title>
-    <link rel="icon" type="image/png" href="/images/padlock-small-square.png" />
- 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
-	<body>
+<head>
+  <title>SneakyNote.com: Send Secrets Securely</title>
+  <link rel="icon" type="image/png" href="/images/padlock-small-square.png" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="main.css" />
+</head>
+<body>
 
-		<!-- Header -->
-			<section id="header">
-				<div class="inner">
-					<span class="icon major fa-lock"></span>
-					<h1>SneakyNote.com</h1>
-					<p>Send encrypted messages via self-destructing read-once URLs.</p>
-					<ul class="actions">
-						<li><a href="/send" class="button">Send a SneakyNote</a></li>
-					</ul>
-				</div>
-			</section>
+<section class="bg-solid">
+  <div class="container row">
+    <div class="one-half column center-text offset-by-three" id="header">
+      <a href="/">
+        <img id="headerLogo" src="/images/padlock-small-square.svg">
+      </a>
+    	<h1>SneakyNote.com</h1>
+      <p id="subtitle">Send encrypted messages with <span class="nowrap">self-destructing read-once links.</span></p>
+      <p><a href="/send" class="button button-primary">Send a SneakyNote</a></p>
+    </div>
+  </div>
+</section>
 
-		<!-- One -->
-			<section id="one" class="main style1">
-				<div class="container">
-					<div class="row 150%">
-						<div class="6u 12u$(medium)">
-							<header class="major">
-								<h2>Stop emailing passwords.</h2>
-							</header>
-							<p>
-                If you need to get a secret to someone, you shouldn't send an email or SMS text message.
-                Email can be read and modified in transit. Text messages can be spoofed.
-                Communications are stored in the cloud indefinitely, waiting for a hacker or <a href="http://c2.com/cgi/wiki?ThreeLetterAgencies">TLA</a> to riffle through your life.
-              </p>
-              <p>
-                Instead, <a href="/send">send a SneakyNote</a>.
-              </p>
-						</div>
-						<div class="6u$ 12u$(medium) important(medium)">
-							<span class="image fit"><img src="images/pic01.jpg" alt="" /></span>
-						</div>
-					</div>
-				</div>
-			</section>
+<section>
+  <div class="container row">
+    <div class="one-half column">
+  	<h2>Stop emailing passwords.</h2>
+      <p>
+        If you need to share a secret with a friend, you shouldn't use email, SMS, or online chat.
+        Email can be read and changed in transit. Text messages may not be secured end-to-end.
+        Chat logs wait in the cloud for a hacker to riffle through your life.
+      </p>
+      <p>
+        <a href="/send">Email a SneakyNote</a> instead.
+      </p>
+    </div>
+    <div class="one-half column">
+      <img class="u-full-width" src="/images/computer_bleached-800.jpg">
+    </div>
+  </div>
+</section>
 
-		<!-- Two -->
-			<section id="two" class="main style2 special">
-        <div class="container">
-          <div>
-            <span class="image fit"><img src="images/pic03.jpg" alt="" /></span>
-          </div>
-          <header class="major">
-            <h2>Sneak Past Your Enemies With A SneakyNote</h2>
-          </header>
-          <p>A SneakyNote URL provides 160-bit security. Your secret is encrypted with 256-bit <a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a> in <a href="http://en.wikipedia.org/wiki/CCM_mode">CCM mode</a>.</p>
-          <p>
-            <a href="/send" class="button">Send a SneakyNote</a>
-          </p>
-        </div>
-			</section>
+<section class="woman-tablet-bg">
+  <div class="container row">
+    <div class="eight columns offset-by-four">
+      <h2>Send Safely</h2>
+      <p>A SneakyNote is an encrypted message with a unique link that looks like:</p>
+      <p><a class="noteURL" href="/get#r9q7wwzsza6tqpcbmmdgmemsz8mp33hm">https://<wbr>sneakynote.<wbr>com/<wbr>get#r9q7<wbr>ww<wbr>zs<wbr>za<wbr>6t<wbr>qp<wbr>cb<wbr>mm<wbr>dg<wbr>me<wbr>ms<wbr>z8<wbr>mp<wbr>33hm</a></p>
+      <p>The link can only be accessed once, so you can send it to your friend however you like.</p>
+      <p>Once they read it, no-one else can. Ever.</o>
+      <p><a href="/send" class="button">Try It</a> <a href="/why" class="button">Learn More</a></p>
+    </div>
+  </div>
+</section>
 
-      <section class="main style1">
-				<div class="container">
-					<div class="row 150%">
-						<div class="6u 12u$(medium)">
-	            <span class="image fit"><img src="images/photo-1430126833726-4a091c572f3c.jpg" alt="" /></span>
-	            <span class="image fit"><img src="images/photo-1428542170253-0d2f063e92c2.jpg" alt="" /></span>
-						</div>
-						<div class="6u$ 12u$(medium)">
-							<header class="major">
-								<h2>What's a SneakyNote?</h2>
-							</header>
-              <p>A SneakyNote is a special URL.</p>
-              <p>It can only be read once.</p>
-              <p>It only lasts for 10 minutes.</p>
-              <p>It's encrypted on your computer and decrypted on your friend's computer.</p>
-              <p>SneakyNote.com must store your encrypted message briefly, but we never see the decryption key. We can't read your message.</p>
-              <p>We make sure your message never touches a hard disk. And when a SneakyNote is read or expires, we thoroughly erase it from memory.</p>
-              <p>
-                Because a SneakyNote can only be read once, it is safe to email a SneakyNote URL to a friend. If they can read your message, they are the only person who has seen your message. As soon as they read it, no one else can ever access it again. It's gone.
-              </p>
-              <p>
-                <a href="/send" class="button">Send a SneakyNote Now</a>
-              </p>
-						</div>
-					</div>
-				</div>
-      </section>
+<section class="birds-bg">
+  <div class="container row center-text">
+  	<h2>Send Secure and Free</h2>
+    <p>SneakyNote.com is a public service. There is no cost.</p>
+  	<p>
+  	  <a href="/send" class="button button-primary">Send a SneakyNote</a>
+  	</p>
+  </div>
+</section>
 
-		<!-- Three -->
-      <section id="three" class="main style2">
-        <div class="container">
-          <div class="row 150%">
-            <div class="6u 12u$(medium)">
-              <span class="image fit"><img src="images/pic02.jpg" alt="" /></span>
-              <h3>Fast & Easy</h3>
-              <p>Even though there are good cryptosystems like <a href="http://en.wikipedia.org/wiki/Pretty_Good_Privacy">PGP</a>, <a href="http://en.wikipedia.org/wiki/S/MIME">S/MIME</a>, and even Apple's <a href="https://www.apple.com/ios/messages/">iMessages</a>, if your recipient doesn't already have one of them set up then you can't securely send them a message.</p>
-              <p>A SneakyNote is just a URL. Instead of painfully setting up one of those services to send a short message, send your SneakyNote URL over plain email or SMS.</p>
-              <h3>Verified Delivery</h3>
-              <p>When your friend opens the message, you will both be presented with a short code. If you see the same code, your message arrived safely.</p>
-            </div>
-            <div class="6u$ 12u$(medium)">
-              <span class="image fit"><img src="images/pic04.jpg" alt="" /></span>
-              <h3>No Covert Interception</h3>
-              <p>If you send your SneakyNote URL over an insecure channel, it is unlikely but possible for an attacker between you and your friend to read your note before your friend does. This is okay if you are prepared.</p>
-              <p>Always wait until your friend receives the SneakyNote before actually setting the password on any services.</p>
-              <p>A SneakyNote URL can only be read once. If the attacker reads the SneakyNote then your friend will not be able to see it.</p>
-              <p>If an attacker tries to get around that by substituting their own new SneakyNote URL, then when your friend opens the URL from the attacker they won't see the same verification code that you see. You should always check the verification code over the telephone.</p>
-              <p>In any case, <strong>you will know if someone intercepts your SneakyNote.</strong> If it happens, just make a new password and send a SneakyNote a different way.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+<footer class="bg-solid">
+  <div class="container">
+    <div class="row">
+      <div class="one-half column info u-pull-left">
+        <h4>
+          <a href="/"><img id="footerLogo" src="/images/padlock-small-square.svg">SneakyNote.com</a>
+        </h4>
+      </div>
+      <div class="one-half column u-pull-right links">
+        <a href="/">Home</a><br>
+        <a href="/send">Send</a><br>
+        <a href="/why">Why a SneakyNote?</a><br>
+        <a href="/what_can_i_send">What can I send?</a><br>
+        <a href="/how_does_it_work">How does it work?</a>
+      </div>
+      <div class="one-half column info u-pull-left">
+      	<p>
+      		SneakyNote.com is in the public domain.
+        </p>
+      	<p>
+      		Interested in a firewall install with<br>
+          custom branding? <a href="mailto:brian@sneakynote.com">Contact Me</a>
+      	</p>
+        <p>
+          <a href="https://twitter.com/brianhempel">Twitter</a> ·
+          <a href="https://github.com/brianhempel/sneakynote.com">GitHub</a> ·
+          <a href="mailto:brian@sneakynote.com">Email</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
 
-		<!-- Four -->
-			<section id="four" class="main style1 special">
-				<div class="container">
-          <span class="image fit"><img src="images/photo-1428856472086-8674d9cbd6bc.jpg" alt="" /></span>
-					<header class="major">
-						<h2>Send Secure and Free.</h2>
-					</header>
-					<p>SneakyNote.com is a public service. There is no cost.</p>
-					<ul class="actions uniform">
-						<li><a href="/send" class="button special">Compose a SneakyNote</a></li>
-					</ul>
-				</div>
-			</section>
-
-
-		<!-- Footer -->
-			<section id="footer">
-				<ul class="icons">
-					<li><a href="https://twitter.com/brianhempel" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="https://github.com/brianhempel/sneakynote.com" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
-					<li><a href="mailto:brian@sneakynote.com" class="icon alt fa-envelope"><span class="label">Email</span></a></li>
-				</ul>
-				<ul class="copyright">
-					<li>SneakyNote.com is in the public domain.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-				</ul>
-				<ul class="copyright">
-					<li>Interested in a firewall install with custom branding? <a href="mailto:brian@sneakynote.com">Contact Me</a></li>
-				</ul>
-			</section>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
-
-	</body>
+</body>
 </html>

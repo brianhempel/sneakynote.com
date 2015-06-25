@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SneakyNote: Send Secrets Securely</title>
+    <title>SneakyNote.com: Send Secrets Securely</title>
     <link rel="icon" type="image/png" href="/images/padlock-small-square.png" />
     <meta name="robots" content="noindex">
     <style>
+      html {
+        font-size: 62.5%;
+      }
       body {
         margin: 0 auto;
         padding: 0;
         text-align: center;
         width: 500px;
-        background-color: #eee;
-        font-family: Helvetica, Arial, sans-serif;
+        background-color: #ccc;
+        font-size: 1.6em;
+        line-height: 1.6;
+        font-weight: 300;
+        font-family: Helvetica, "HelveticaNeue", "Helvetica Neue", Arial, sans-serif;
+        color: #222;
         background-image: url('/images/padlock-small.svg');
+        background-attachment: fixed;
       }
       #content {
         background-color: white;
@@ -23,9 +31,20 @@
         margin-top: 0;
         padding: 0;
         font-size: 47px;
+        font-family: Futura, Helvetica, "HelveticaNeue", "Helvetica Neue", Arial, sans-serif;
+        font-weight: 300;
+        letter-spacing: -.18rem;
       }
-      a, a:visited {
-        color: #00f;
+      h2 {
+        font-family: Futura, Helvetica, "HelveticaNeue", "Helvetica Neue", Arial, sans-serif;
+        font-weight: 300;
+        letter-spacing: -.12rem;
+      }
+      a {
+        color: #1EAEDB;
+      }
+      a:hover {
+        color: #0FA0CE;
       }
 
       #compromised {
@@ -59,7 +78,7 @@
         height: 26px;
         width: 26px;
         opacity: 0.9;
-        vertical-align: bottom;
+        vertical-align: text-bottom;
       }
       #noteContent {
         display: inline-block;
@@ -83,33 +102,88 @@
         border-radius: 10px;
         font-weight: bold;
       }
-      button {
+      .button,
+      button,
+      input[type="submit"],
+      input[type="reset"],
+      input[type="button"] {
         display: inline-block;
+        height: 38px;
+        padding: 0 30px;
+        color: #555;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 38px;
+        letter-spacing: .1rem;
+        text-transform: uppercase;
+        text-decoration: none;
+/*        white-space: nowrap;*/
+        background-color: rgba(255,255,255,0.8);
+        border-radius: 4px;
+        border: 1px solid #bbb;
         cursor: pointer;
+        box-sizing: border-box; }
+      .button:hover,
+      button:hover,
+      input[type="submit"]:hover,
+      input[type="reset"]:hover,
+      input[type="button"]:hover,
+      .button:focus,
+      button:focus,
+      input[type="submit"]:focus,
+      input[type="reset"]:focus,
+      input[type="button"]:focus {
+        color: #333;
+        border-color: #888;
+        outline: 0; }
+      .button.button-primary,
+      button.button-primary,
+      input[type="submit"].button-primary,
+      input[type="reset"].button-primary,
+      input[type="button"].button-primary {
+        color: #FFF;
+        background-color: #33C3F0;
+        border-color: #33C3F0; }
+      .button.button-primary:hover,
+      button.button-primary:hover,
+      input[type="submit"].button-primary:hover,
+      input[type="reset"].button-primary:hover,
+      input[type="button"].button-primary:hover,
+      .button.button-primary:focus,
+      button.button-primary:focus,
+      input[type="submit"].button-primary:focus,
+      input[type="reset"].button-primary:focus,
+      input[type="button"].button-primary:focus {
+        color: #FFF;
+        background-color: #1EAEDB;
+        border-color: #1EAEDB; }
+      button {
+        font-family: Helvetica, "HelveticaNeue", "Helvetica Neue", Arial, sans-serif;
+      }
+      button.good,
+      button.bad {
         width: 200px;
         height: 100px;
-        font-size: 26px;
+        font-size: 21px;
         margin: 10px;
-        background-color: #f6f6f6;
-        background: -webkit-linear-gradient(rgba(144,144,144,0.2), rgba(144,144,144,0.0));
-        background: -o-linear-gradient(rgba(144,144,144,0.2), rgba(144,144,144,0.0));
-        background: -moz-linear-gradient(rgba(144,144,144,0.2), rgba(144,144,144,0.0));
-        background: linear-gradient(rgba(144,144,144,0.2), rgba(144,144,144,0.0));
-        border-radius: 4px;
-        border: 4px outset #ddd;
-      }
-      button:active {
-        border-style: inset;
+        padding: 0 10px;
       }
       button.good {
         color: #0a0;
-        background-color: #efe;
-        border-color: #1d1;
+        border-color: #1b1;
+        opacity: 0.7;
+      }
+      button.good:hover {
+        opacity: 1.0;
       }
       button.bad {
         color: #d00;
-        background-color: #fee;
         border-color: #d44;
+        opacity: 0.7;
+      }
+      button.bad:hover {
+        opacity: 1.0;
       }
     </style>
     <script>
@@ -141,7 +215,11 @@
 
       // Get!
       function get() {
-        getNote(uuid(), get2);
+        if (urlKey() === "r9q7wwzsza6tqpcbmmdgmemsz8mp33hm") {
+          demo();
+        } else {
+          getNote(uuid(), get2);
+        }
       }
       window.onReadyHandlers.push(get);
 
@@ -187,6 +265,16 @@
 
         var plaintext = sjcl.codec.utf8String.fromBits(plaintextWords);
         byId("noteContent").innerHTML = plaintext;
+      }
+
+      function demo() {
+        byId("retreiveStatus").style.display = "none";
+        byId("noteContent").innerHTML = "A SneakyNote looks like this when it is opened.\n\nYour secret message will be displayed here.\n\nThis is just a demo message, however.\n\n<a id=\"demoGoBack\" href=\"#back\">Go back</a> or <a href=\"/send\">make a new SneakyNote</a>.";
+        byId("noteStuff").style.display = "block";
+        byId("demoGoBack").onclick = function (e) {
+          window.history.back();
+          e.preventDefault();
+        };
       }
 
       function codesMatch() {
@@ -1366,7 +1454,7 @@
           <button id="codesDoNotMatch" class="bad">✘ Codes do not match!</button>
           <button id="yesTheCodesMatch" class="good">✔ Yes, the codes match.</button>
         </div>
-        <p class="info">*Verify the code over the telephone or any channel unlikely to be vulnerable to a <a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack" target="_blank">man-in-the-middle attack</a>. Do not use the same communication method you used to send the secret URL.</p>
+        <p class="info">*Verify the code over the telephone or any channel unlikely to be vulnerable to a <a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack" target="_blank">man-in-the-middle attack</a>. Do not use the same communication method you used to send the secret link.</p>
       </div>
       <div id="badCodeStuff">
         <h2>Consider Secret Compromised</h2>
