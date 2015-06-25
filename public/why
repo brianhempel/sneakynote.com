@@ -82,7 +82,7 @@
     </div>
   </div>
   <div class="container row center-text">
-    <a href="/what_can_i_send" class="button">What Can I Send?</a>
+    <a href="/what_can_i_send" class="button lonely-action-button">What Can I Send?</a>
   </div>
 </section>
 

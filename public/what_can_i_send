@@ -47,7 +47,7 @@
     </div>
   </div>
   <div class="container row center-text">
-	  <a href="/how_does_it_work" class="button">How Does It Work?</a>
+	  <a href="/how_does_it_work" class="button lonely-action-button">How Does It Work?</a>
   </div>
 </section>
 
