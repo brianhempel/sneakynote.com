@@ -13,7 +13,7 @@
   <div class="container row">
     <div class="column center-text">
       <a href="/"><img id="headerLogo" src="/images/padlock-small-square.svg"></a>
-      <h1>How Does It Work?</h1>
+      <h1><a href="">How Does It Work?</a></h1>
     </div>
   </div>
 </section>
@@ -26,7 +26,7 @@
 
 <section class="bg-solid">
   <div class="container row">
-    <h2>The Short Story</h2>
+    <h2><a name="the-short-story" href="#the-short-story">The Short Story</a></h2>
     <ol>
       <li>
         After you type your message, your computer generates a random token, like&nbsp;<code>r9q7ww<wbr>zs<wbr>za<wbr>6t<wbr>qp<wbr>cb<wbr>mm<wbr>dg<wbr>me<wbr>ms<wbr>z8<wbr>mp<wbr>33hmm</code>. Your computer encrypts your message using this token.
@@ -50,7 +50,7 @@
 
 <section>
   <div class="container row center-text">
-  	<h2>Learn By Doing</h2>
+  	<h2><a name="learn-by-doing" href="#learn-by-doing">Learn By Doing</a></h2>
     <p>
       To see how all  this works, try sending a SneakyNote to yourself.
     </p>
@@ -63,11 +63,11 @@
 <section class="bg-solid">
   <div class="container row">
     <img class="u-full-width" src="/images/type_set-1600.jpg" srcset="/images/type_set-600.jpg 600w, /images/type_set-800.jpg 800w, /images/type_set-1000.jpg 1000w, /images/type_set-1200.jpg 1200w, /images/type_set-1400.jpg 1400w, /images/type_set-1600.jpg 1600w, /images/type_set-1800.jpg 1800w, /images/type_set-2000.jpg 2000w">
-    <h2>The Long Story</h2>
+    <h2><a name="the-long-story" href="#the-long-story">The Long Story</a></h2>
     <p>
       The truth is in the <a href="https://github.com/brianhempel/sneakynote.com">source code</a>, but here's an English language version.
     </p>
-    <h3>Goals</h3>
+    <h3><a name="goals" href="#goals">Goals</a></h3>
     <p>
       The system design had a few goals to improve on the existing self-destruction/expiring password sharing services.
     </p>
@@ -83,7 +83,7 @@
     <p>
       The original design did not imagine a verification code, but it was added to detect <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">MITM attacks</a>. The service can provide no useful guarantees without MITM detection.
     </p>
-    <h3>Implementation</h3>
+    <h3><a name="implementation" href="#implementation">Implementation</a></h3>
     <p>
       SneakyNote.com uses the <a href="http://bitwiseshiftleft.github.io/sjcl/">Stanford Javascript Crypto Library (SJCL)</a> to encrypt and decrypt the secret in the web browser.
     </p>
@@ -168,7 +168,7 @@
 <section>
   <div class="container row">
     <img class="u-full-width" src="/images/raven-1600.jpg" srcset="/images/raven-600.jpg 600w, /images/raven-800.jpg 800w, /images/raven-1000.jpg 1000w, /images/raven-1200.jpg 1200w, /images/raven-1400.jpg 1400w, /images/raven-1600.jpg 1600w, /images/raven-1800.jpg 1800w, /images/raven-2000.jpg 2000w">
-    <h2>Threat Models</h2>
+    <h2><a name="threat-models" href="#threat-models">Threat Models</a></h2>
     <p>
       Because SneakyNote links will most often travel over untrusted channels, the main goal of a SneakyNote is to detect interception rather than prevent it.
     </p>
@@ -178,14 +178,14 @@
   </div>
   <div class="container row">
     <div class="one-half column">
-      <h4>MITM Greedy Read</h4>
+      <h4><a name="mitm-greedy-read" href="#mitm-greedy-read">MITM Greedy Read</a></h4>
       <p>
         If a middleman accesses the secret before the intended recipient, when the recipient clicks the link they will see a "Consider Secret Compromised" message rather than the secret. Both parties can react accordingly.
       </p>
       <p>
         If the sender is watching the status page, they can see when the secret is accessed. A secret accessed too quickly can tip off the sender that something is up.
       </p>
-      <h4>MITM Greedy Read And Replace</h4>
+      <h4><a name="mitm-greedy-read-and-replace" href="#mitm-greedy-read-and-replace">MITM Greedy Read And Replace</a></h4>
       <p>
         A smarter rouge middleman would not merely read the secret. A smarter middleman will read the secret, generate a new SneakyNote link with the same secret, and substitute the new SneakyNote link into the original communication before forwarding that email/SMS/chat message to the recipient.
       </p>
@@ -200,7 +200,7 @@
       </p>
     </div>
     <div class="one-half column">
-      <h4>MITM Clever Read And Replace</h4>
+      <h4><a name="mitm-clever-read-and-replace" href="#mitm-clever-read-and-replace">MITM Clever Read And Replace</a></h4>
       <p>
         A bad-guy middleman that does not want the note to immediately appear as opened to the sender could replace the SneakyNote link in the communication, long poll the status of the new link, but wait to open the original link until just after the replacement note is opened.
       </p>
@@ -219,38 +219,38 @@
     </div>
   </div>
   <div class="container row">
-    <h4>Can Verification Codes Be Brute-forced?</h4>
+    <h4><a name="can-verification-codes-be-brute-forced" href="#can-verification-codes-be-brute-forced">Can Verification Codes Be Brute-forced?</a></h4>
     <p>
       Verification codes are generated randomly by the server (from a cryptographic RNG). The middleman could (with some delay in forwarding the message), attempt to create a lot of SneakyNotes and wait for a code that matches the original. SneakyNote.com may be able to handle 10,000 requests per second. Over 10 minutes of creating SneakyNotes as fast as possible, an attacker has only about a 1 in 100 million chance of getting a code that matches the original message. The attacker only has a 10 minute window before each note expires, so they cannot increase these odds. They could only ever cover 1/100,000,000 of the code space.
     </p>
   </div>
   <div class="container row">
     <div class="one-half column">
-      <h4>Compromised Server, Eavesdropping Only</h4>
+      <h4><a name="compromised-server-eavesdropping-only" href="#compromised-server-eavesdropping-only">Compromised Server, Eavesdropping Only</a></h4>
       <p>If an attacker gains access to the SneakyNote.com server, they could begin copying off encrypted secrets as they arrive at the server.</p>
       <p>The attacker may be able to see which IP addresses are talking to the server and when, but without the decryption key, the attacker cannot read the secrets.</p>
       <p>If, however, the attacker also has broad access to snoop global internet traffic, they might begin collecting SneakyNote links they see. They could decrypt any secret for which they also intercepted the SneakyNote link.</p>
       <p>Bug me to add something here about the most likely methods for an attacker to gain access to the server box.</p>
     </div>
     <div class="one-half column">
-      <h4>Compromised Server, New Javascript</h4>
+      <h4><a name="compromised-server-new-javascript" href="#compromised-server-new-javascript">Compromised Server, New Javascript</a></h4>
       <p>If the attacker does not have broad access to snoop other internet traffic, an attacker might instead modify the SneakyNote server to send Javascript that tells the browser to store the secret unencrypted instead—or perhaps more subtle: encrypt the secret with the UUID so the secret still looks encrypted but the attacker can recover the decryption key.</p>
       <p>In this case, it's a matter of eyes on the Javascript. The attack is in plain sight for anyone who would audit the Javascript or run a diff against GitHub. To make auditing easier, SneakyNote.com does not minify the Javascript.</p>
     </div>
   </div>
   <div class="container row">
     <div class="one-half column">
-      <h4>Search Warrants Etc.</h4>
+      <h4><a name="search-warrants-etc" href="#search-warrants-etc">Search Warrants Etc.</a></h4>
       <p>SneakyNote.com is not able to arbitrarily provide plaintext secrets without compromising our service similar to what an attacker would do.</p>
       <p>Philosophically, I have no problem per se with cooperating with search warrants that went through due process—there are real bad guys in the world and I don't want SneakyNote.com to be their friend.</p>
       <p>However, forcing an organization to write new code to compromise their own cryptosystem to honor a search warrant could be a bad precedent.</p>
       <p>As of yet, SneakyNote.com has received no warrants or similar wiretapping requests.</p>
     </div>
     <div class="one-half column">
-      <h4>In Case of A Compromised Server</h4>
+      <h4><a name="in-case-of-a-compromised-server" href="#in-case-of-a-compromised-server">In Case of A Compromised Server</a></h4>
       <p>If I ever become aware of an attacker in the SneakyNote.com server, news will be published on the home page and and on the SneakyNote send and get pages.</p>
       <p>The service will be taken offline while the attack is resolved. After that, service may or may not resume.</p>
-      <h4>Reporting Security Issues</h4>
+      <h4><a name="reporting-security-issues" href="#reporting-security-issues">Reporting Security Issues</a></h4>
       <p>If you notice a vulnerability in SneakyNote.com, I use <a href="https://en.wikipedia.org/wiki/S/MIME">S/MIME</a>. We can send a few emails back and forth to get that handshake set up, then you can report the vulnerability. <a href="https://www.comodo.com/home/email-security/free-email-certificate.php">Comodo</a> and <a href="https://startssl.com/?app=12">StartCom</a> offer free S/MIME certificates.</p>
       <p>If the issue is less serious, <a href="https://github.com/brianhempel/sneakynote.com/issues">open an issue</a> or prepare a pull request.</p>
     </div>
@@ -259,7 +259,7 @@
 
 <section class="bg-solid">
   <div class="container row center-text">
-  	<h2>Acknowledgements</h2>
+  	<h2><a name="acknowledgements" href="#acknowledgements">Acknowledgements</a></h2>
     <p>Cryptography provided by the <a href="http://bitwiseshiftleft.github.io/sjcl/">Stanford Javascript Crypto Library (SJCL)</a></p>
   	<p>Images by <a href="https://unsplash.com/">Unsplash</a></p>
   	<p>Built with <a href="http://getskeleton.com/">Skeleton</a></p>
@@ -269,7 +269,7 @@
 
 <section class="rocky-shoreline-bg">
   <div class="container row center-text">
-  	<h2>Let's Do This</h2>
+  	<h2><a name="lets-do-this" href="#lets-do-this">Let's Do This</a></h2>
     <p>I'm ready to Rijndael all over some UTF-8.</p>
   	<p>
   	  <a href="/send" class="button button-primary">Send a SneakyNote</a>

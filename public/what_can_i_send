@@ -13,35 +13,35 @@
   <div class="container row">
     <div class="column center-text">
       <a href="/"><img id="headerLogo" src="/images/padlock-small-square.svg"></a>
-      <h1>What Can I Send?</h1>
+      <h1><a href="">What Can I Send?</a></h1>
     </div>
   </div>
 </section>
 
 <section>
   <div class="container row">
-    <h2>You Can Safely Send...</h2>
+    <h2><a name="you-can-safely-send" href="#you-can-safely-send">You Can Safely Send...</a></h2>
   </div>
   <div class="container row">
     <div class="one-half column">
-      <h4>Passwords</h4>
+      <h4><a name="passwords" href="#passwords">Passwords</a></h4>
       <p>SneakyNote.com was written because I wanted an easy way to send passwords to clients.</p>
       <p>Just wait until after the SneakyNote arrives safely before you actually change the password on the service.</p>
     </div>
     <div class="one-half column">
-      <h4>Public Keys</h4>
+      <h4><a name="public-keys" href="#public-keys">Public Keys</a></h4>
       <p>A SneakyNote is a great way to exchange public keys for PGP or SSH because you can verify that your message wasn't modified.</p>
       <p>No more snail-mail!</p>
     </div>
   </div>
   <div class="container row">
     <div class="one-half column">
-      <h4>Bank Account Info</h4>
+      <h4><a name="bank-account-info" href="#bank-account-info">Bank Account Info</a></h4>
       <p>Need to give someone access to your bank account?</p>
       <p>Split your account info into two or three parts and send each part in a SneakyNote, one after the other.</p>
     </div>
     <div class="one-half column">
-      <h4>PGP Messages</h4>
+      <h4><a name="pgp-messages" href="#pgp-messages">PGP Messages</a></h4>
       <p>If your email account or your recipient's email account is hacked, then your old PGP messages become public when your private key is compromised.</p>
       <p>Unlike email, SneakyNotes disappear. Send your PGP messages in a SneakyNote so the messages won't be around in the future.</p>
     </div>
@@ -53,7 +53,7 @@
 
 <section class="city-bg">
   <div class="container row center-text">
-  	<h2>Safety First</h2>
+  	<h2><a name="safety-first" href="#safety-first">Safety First</a></h2>
     <p>Don't just send an email, send a SneakyNote.</p>
   	<p>
   	  <a href="/send" class="button button-primary">Send a SneakyNote</a>
