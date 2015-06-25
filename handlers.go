@@ -3,13 +3,16 @@ package main
 import (
   "bufio"
   "github.com/brianhempel/sneakynote.com/store"
-  "path"
-  "net/http"
-  "regexp"
   "log"
-  "strconv"
+  "mime"
+  "net/http"
+  "path"
+  "path/filepath"
+  "regexp"
   "reflect"
   "runtime"
+  "strconv"
+  "strings"
   "time"
   "unsafe" // For forcing a flush of the response bufios
 )
@@ -22,11 +25,51 @@ var (
 func Handlers() *http.ServeMux {
   mux := http.NewServeMux()
 
-  mux.Handle("/", http.FileServer(http.Dir(publicPath())))
+  publicDir := http.Dir(publicPath())
+  mux.Handle("/", Cache1Day(MaybeGzip(publicDir, http.FileServer(publicDir))))
 
   mux.HandleFunc("/notes/", note)
 
   return mux;
+}
+
+func Cache1Day(original http.Handler) http.Handler {
+  return http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
+    // 1 Day
+    response.Header()["Cache-Control"] = []string{"private, max-age=86400"}
+    original.ServeHTTP(response, request)
+  })
+}
+
+// Looks for a file.gz file and serves that if present
+// `original` is a file server
+func MaybeGzip(root http.FileSystem, original http.Handler) http.Handler {
+  return http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
+    if strings.Contains(request.Header.Get("Accept-Encoding"), "gzip") {
+      requestPath := request.URL.Path
+      if !strings.HasPrefix(requestPath, "/") {
+      	requestPath = "/" + requestPath
+      }
+      requestPath = path.Clean(requestPath)
+      gzPath := requestPath + ".gz"
+      if requestPath == "/" {
+        gzPath = "/index.html.gz"
+      }
+      // log.Print(gzPath)
+      file, err := root.Open(gzPath)
+      if err == nil {
+        file.Close()
+        contentType := mime.TypeByExtension(filepath.Ext(requestPath))
+        if contentType == "" {
+          contentType = "text/html; charset=utf-8"
+        }
+        response.Header().Set("Content-Type", contentType)
+        response.Header().Set("Content-Encoding", "gzip")
+      	request.URL.Path = gzPath
+      }
+		}
+    original.ServeHTTP(response, request)
+  })
 }
 
 func AddHSTSHeader(original http.Handler) http.Handler {
@@ -46,6 +89,8 @@ func RedirectToHTTPSHandler() http.Handler {
 }
 
 func note(response http.ResponseWriter, request *http.Request) {
+  response.Header()["Cache-Control"] = []string{"private, max-age=0, no-cache, no-store"}
+
   if noteStatusPathRegexp.MatchString(request.URL.Path) {
     noteStatus(response, request)
     return
