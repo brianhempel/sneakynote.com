@@ -272,7 +272,7 @@
 
       function demo() {
         byId("retreiveStatus").style.display = "none";
-        byId("noteContent").innerHTML = "A SneakyNote looks like this when it is opened.\n\nYour secret message will be displayed here.\n\nThis is just a demo message, however.\n\n<a id=\"demoGoBack\" href=\"#back\">Go back</a> or <a href=\"/send\">make a new SneakyNote</a>.";
+        byId("noteContent").innerHTML = "A SneakyNote looks like this when it is opened.\n\nYour secret message appears here.\n\nAlas, this demo message wishes it could be\na <em>real</em> SneakyNote like all its friends. This\ndemo note can't seem to die, but its normal\nSneakyNote friends vanish when read.\n\n<a id=\"demoGoBack\" href=\"#back\">Go back</a> or <a href=\"/send\">make a real SneakyNote</a>.";
         byId("noteStuff").style.display = "block";
         byId("demoGoBack").onclick = function (e) {
           window.history.back();
