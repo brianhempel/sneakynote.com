@@ -1476,7 +1476,7 @@
 
       <div id="retreiveStatus" class="highlightBox">Fetching note...</div>
       <div id="verifyNoteCodeStuff">
-        <p>Over the telephone, ask the<br>sender if they see this code:*</p>
+        <p>To make sure your note link was not replaced by a bad guy, ask the sender over the telephone if they see this code:*</p>
         <p><span id="noteCode" class="highlightBox"></span></p>
         <p>Do the codes match?</p>
         <div>
