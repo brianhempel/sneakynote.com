@@ -235,7 +235,7 @@
     <div class="one-half column">
       <h4><a name="compromised-server-new-javascript" href="#compromised-server-new-javascript">Compromised Server, New Javascript</a></h4>
       <p>If the attacker does not have broad access to snoop other internet traffic, an attacker might instead modify the SneakyNote server to send Javascript that tells the browser to store the secret unencrypted instead—or perhaps more subtle: encrypt the secret with the UUID so the secret still looks encrypted but the attacker can recover the decryption key.</p>
-      <p>In this case, it's a matter of eyes on the Javascript. The attack is in plain sight for anyone who would audit the Javascript or run a diff against GitHub. To make auditing easier, SneakyNote.com does not minify the Javascript.</p>
+      <p>In this case, it's a matter of eyes on the Javascript. The attack is in plain sight for anyone who would audit the Javascript or <a href="https://gist.github.com/brianhempel/1c7ca43186d1c0c082fc">run a diff against GitHub</a>. To make auditing easier, SneakyNote.com does not minify the Javascript.</p>
     </div>
   </div>
   <div class="container row">
