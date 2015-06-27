@@ -774,7 +774,7 @@ pre > code {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 th,
 td {
-  padding: 12px 15px;
+  padding: 12px 8px;
   text-align: left;
   border-bottom: 1px solid #E1E1E1; }
 th:first-child,
@@ -1072,6 +1072,16 @@ p + img {
   font-style: italic;
   font-weight: bold;
   overflow-wrap: break-word;
+}
+
+.inline-block {
+  display: inline-block;
+  float: none;
+}
+
+#comparisonTableWrapper {
+  width: 100%;
+  max-width: 510px;
 }
 
 .big-mark {

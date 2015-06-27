@@ -19,15 +19,15 @@
 </section>
 
 <section>
-  <div class="container row">
-    <div class="one-half column offset-by-three">
+  <div class="container row center-text">
+    <div id="comparisonTableWrapper" class="inline-block">
       <table class="u-full-width">
         <thead>
           <tr>
             <th></th>
-            <th class="okay center-text">Email</th>
-            <th class="good center-text">SneakyNote</th>
-            <th class="okay center-text">PGP</th>
+            <th class="okay center-text checkmarks">Email</th>
+            <th class="good center-text checkmarks">SneakyNote</th>
+            <th class="okay center-text checkmarks">PGP</th>
           </tr>
         </thead>
         <tbody>
@@ -50,7 +50,7 @@
             <td class="big-mark okay center-text">✔</td>
           </tr>
           <tr>
-            <td>Impossible to Intercept</td>
+            <td>Impossible to&nbsp;Intercept</td>
             <td></td>
             <td></td>
             <td class="big-mark okay center-text">✔</td>
