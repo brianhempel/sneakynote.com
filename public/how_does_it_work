@@ -42,7 +42,7 @@
         Your friend clicks the link. Their computer grabs the encrypted message from SneakyNote.com and uses the token in the link to decrypt the message. Behind the scenes, SneakyNote.com immediately destroys its copy of the encrypted message so nobody else can access the link.
       </li>
       <li>
-        Both you and your friend will see a code. The code ensures that the link wasn't replaced by a hacker between your and your friend. After verifying the code with you over the phone, your friend can view your message. Done!
+        Both you and your friend will see a code. The code ensures that the link wasn't replaced by a hacker between you and your friend. After verifying the code with you over the phone, your friend can view your message. Done!
       </li>
     </ol>
   </div>
@@ -91,7 +91,7 @@
       The first step is to generate the token for the url. Most browsers these days implement <code>window.<wbr>crypto.<wbr>getRandomValues()</code> which exposes a cryptographically secure random number generator to Javascript. If that is available, SJCL will use that. If not, SJCL falls back to gathering entropy from mouse movements, the accelerometer, key presses, and other signals. If less than 256bits of entropy has been gathered before the user presses "Send", they are presented with a mouse movement/finger press challenge to gather more entropy.
     </p>
     <p>
-      When the random number generator is seeded, the sender's browser generates a lowercase base 30 token. The alphabet is the standard alphanumeric base 36, but with <code>0 1 i l o</code> omitted because they are ambiguous, and with <code>u</code> omitted because there is a high probability it might be proceeded by and <code>f</code> and that's a problem if you happen to read the token to someone out loud.
+      When the random number generator is seeded, the sender's browser generates a lowercase base 30 token. The alphabet is the standard alphanumeric base 36, but with <code>0 1 i l o</code> omitted because they are ambiguous, and with <code>u</code> omitted because there is a high probability it might be preceded by an <code>f</code> and that's a problem if you happen to read the token to someone out loud.
     </p>
     <p>
       The target entropy for the URL token is 160 bits, but because the number of characters in the alphabet is not a power of two, the actual token strength is about 161.9 bits.
@@ -187,7 +187,7 @@
       </p>
       <h4><a name="mitm-greedy-read-and-replace" href="#mitm-greedy-read-and-replace">MITM Greedy Read And Replace</a></h4>
       <p>
-        A smarter rouge middleman would not merely read the secret. A smarter middleman will read the secret, generate a new SneakyNote link with the same secret, and substitute the new SneakyNote link into the original communication before forwarding that email/SMS/chat message to the recipient.
+        A smarter rogue middleman would not merely read the secret. A smarter middleman will read the secret, generate a new SneakyNote link with the same secret, and substitute the new SneakyNote link into the original communication before forwarding that email/SMS/chat message to the recipient.
       </p>
       <p>
         If the sender is watching the status page, they can see when the secret is accessed. A secret accessed too quickly can tip off the sender that something is up.
@@ -264,6 +264,7 @@
   	<p>Images by <a href="https://unsplash.com/">Unsplash</a></p>
   	<p>Built with <a href="http://getskeleton.com/">Skeleton</a></p>
     <p>Design inspired by <a href="http://html5up.net/photon">Photon</a> from <a href="http://html5up.net/">HTML5 UP</a></p>
+    <p><a href="https://twitter.com/laserlemon">Steve Richert</a> identified a few typos.</p>
   </div>
 </section>
 
