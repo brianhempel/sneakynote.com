@@ -66,15 +66,21 @@
       <img class="u-full-width" src="/images/bubbles-800.jpg" srcset="/images/bubbles-600.jpg 600w, /images/bubbles-800.jpg 800w">
       <h4><a name="easy-security" href="#easy-security">Easy Security</a></h4>
       <p>A SneakyNote is just a link. Just send your friend a SneakyNote link over plain email instead of setting up a system like <a href="http://en.wikipedia.org/wiki/Pretty_Good_Privacy">PGP</a>, <a href="http://en.wikipedia.org/wiki/S/MIME">S/MIME</a>, or <a href="https://www.apple.com/ios/messages/">iMessages</a>.</p>
+    </div>
+    <div class="one-half column">
       <img class="u-full-width" src="/images/pocket_watch-800.jpg" srcset="/images/pocket_watch-600.jpg 600w, /images/pocket_watch-800.jpg 800w">
       <h4><a name="short-lived" href="#short-lived">Short-lived</a></h4>
-      <p>Normal email sits around forever waiting for a hacker to steal all your messages, but an unopened SneakyNote link is erased after only 10 minutes. Opened SneakyNotes are erased immediately.</p>
-      <p>If you don't want future bad guys to read your message, <a href="/send">send a SneakyNote</a>.</p>
+      <p>Protect yourself from future bad guys. Normal email sits around forever waiting for a hacker to steal all your messages, but an opened SneakyNote link is erased immediately. Unopened SneakyNotes are erased after only 10 minutes.</p>
     </div>
+  </div>
+  <div class="container row">
     <div class="one-half column">
       <img class="u-full-width" src="/images/checking_iphone-800.jpg" srcset="/images/checking_iphone-600.jpg 600w, /images/checking_iphone-800.jpg 800w">
       <h4><a name="verified-delivery" href="#verified-delivery">Verified Delivery</a></h4>
       <p>When your friend opens the message, you both will be presented with a short code. If you see the same code, your message arrived safely.</p>
+      <p>It's safest to verify the code by voice over the phone.</p>
+    </div>
+    <div class="one-half column">
       <img class="u-full-width" src="/images/streaking_lights_telephone-800.jpg" srcset="/images/streaking_lights_telephone-600.jpg 600w, /images/streaking_lights_telephone-800.jpg 800w">
       <h4><a name="no-covert-interception" href="#no-covert-interception">No Covert Interception</a></h4>
       <p>Though SneakyNote.com can't stop a rogue middleman between you and your friend from reading your secret first, the middleman won't be able to read your secret without you finding out. Just check the code with your friend.</p>
