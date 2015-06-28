@@ -9,3 +9,5 @@ for path in ./public/**/* ; do
     (echo "$path" | egrep -i "\\.(jpe?g|gif|png|gz)$" > /dev/null) || (cat "$path" | gzip -9 > "$path.gz")
   fi
 done
+
+rm public/log.txt.gz
