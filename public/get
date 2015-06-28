@@ -1576,6 +1576,7 @@
     <script>
       // Clicked a home-page demo note.
       if (document.referrer === "https://sneakynote.com/" || document.referrer === "http://localhost:8080/") {
+        byId("title").innerHTML = "Demo SneakyNote";
         byId("goBackToHomePage").style.display = "inline-block";
         byId("goBackToHomePage").onclick = function () { window.history.back(); };
       }
