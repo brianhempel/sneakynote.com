@@ -52,8 +52,8 @@
         fill: currentColor;
       }
       .icon {
-        display: inline-block;
         height: 1em;
+        width: 1em;
         margin-bottom: -0.1em;
       }
 
