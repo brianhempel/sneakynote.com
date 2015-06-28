@@ -5,10 +5,17 @@ import (
   "github.com/brianhempel/sneakynote.com/store"
   "log"
   "net/http"
+  "sync/atomic"
+  "time"
   "os"
+  "os/signal"
+  "syscall"
 )
 
-var mainStore *store.Store
+var (
+  mainStore *store.Store
+  lastStatusLogTime time.Time
+)
 
 func main() {
   if len(os.Args) == 1 {
@@ -33,6 +40,7 @@ func main() {
 
 func StartServer() {
   MaybeSetupStore()
+  StartPeriodicStatusLogger()
 
   log.Printf("Starting sweeper...")
   StartSweeper()
@@ -111,4 +119,57 @@ func TeardownStore() {
 
 func StartSweeper() {
   go mainStore.SweepContinuously()
+}
+
+func StartPeriodicStatusLogger() {
+  lastStatusLogTime = time.Now()
+
+  ticker := time.NewTicker(time.Hour * 3)
+  go func() {
+    for range ticker.C {
+      logStatus()
+    }
+  }()
+
+  signalChan := make(chan os.Signal, 1)
+  signal.Notify(signalChan, os.Interrupt, os.Kill, syscall.SIGTERM)
+  go func() {
+    <-signalChan
+    logStatus()
+    os.Exit(0)
+  }()
+}
+
+func logStatus() {
+  now := time.Now()
+
+  created := atomic.SwapUint64(&notesCreatedCount, 0)
+  full := atomic.SwapUint64(&noteStorageFullRequestCount, 0)
+  tooLarge := atomic.SwapUint64(&noteTooLargeRequestCount, 0)
+  duplicateId := atomic.SwapUint64(&noteDuplicateIdRequestCount, 0)
+  opened := atomic.SwapUint64(&notesOpenedCount, 0)
+  expired := atomic.SwapUint64(&noteExpiredRequestCount, 0)
+  alreadyOpened := atomic.SwapUint64(&noteAlreadyOpenedRequestCount, 0)
+  notFound := atomic.SwapUint64(&noteNotFoundCount, 0)
+  status := atomic.SwapUint64(&statusRequestCount, 0)
+  assets := atomic.SwapUint64(&assetRequestCount, 0)
+  total := atomic.SwapUint64(&totalRequestCount, 0)
+
+  requestsPerSecond := float64(total) / now.Sub(lastStatusLogTime).Seconds()
+
+  log.Printf("Requests: total=%d rps=%.6f assets=%d Notes: created=%d opened=%d alreadyOpened=%d expired=%d notFound=%d full=%d tooLarge=%d duplicateId=%d status=%d",
+    total,
+    requestsPerSecond,
+    assets,
+    created,
+    opened,
+    alreadyOpened,
+    expired,
+    notFound,
+    full,
+    tooLarge,
+    duplicateId,
+    status)
+
+  lastStatusLogTime = now
 }

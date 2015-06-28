@@ -14,6 +14,7 @@ import (
   "runtime"
   "strconv"
   "strings"
+  "sync/atomic"
   "time"
   "unsafe" // For forcing a flush of the response bufios
 )
@@ -21,19 +22,39 @@ import (
 var (
   notePathRegexp = regexp.MustCompile("\\A/notes/([0-9a-fA-F]{8}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{12})/?\\z")
   noteStatusPathRegexp = regexp.MustCompile("\\A/notes/([0-9a-fA-F]{8}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{12})/status/?\\z")
+
+  notesCreatedCount uint64 = 0
+  noteStorageFullRequestCount uint64 = 0
+  noteTooLargeRequestCount uint64 = 0
+  noteDuplicateIdRequestCount uint64 = 0
+  notesOpenedCount uint64 = 0
+  noteExpiredRequestCount uint64 = 0
+  noteAlreadyOpenedRequestCount uint64 = 0
+  noteNotFoundCount uint64 = 0
+  statusRequestCount uint64 = 0
+  assetRequestCount uint64 = 0
+  totalRequestCount uint64 = 0
 )
 
 func Handlers() *http.ServeMux {
   mux := http.NewServeMux()
 
   publicDir := http.Dir(publicPath())
-  mux.Handle("/", Cache1Day(MaybeGzip(publicDir, http.FileServer(publicDir))))
+  mux.Handle("/", CountAnAssetRequest(Cache1Day(MaybeGzip(publicDir, http.FileServer(publicDir)))))
 
   mux.HandleFunc("/free_space", freeSpace)
 
   mux.HandleFunc("/notes/", note)
 
   return mux;
+}
+
+func CountAnAssetRequest(original http.Handler) http.Handler {
+  return http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
+    atomic.AddUint64(&totalRequestCount, 1)
+    atomic.AddUint64(&assetRequestCount, 1)
+    original.ServeHTTP(response, request)
+  })
 }
 
 func Cache1Day(original http.Handler) http.Handler {
@@ -92,6 +113,8 @@ func RedirectToHTTPSHandler() http.Handler {
 }
 
 func note(response http.ResponseWriter, request *http.Request) {
+  atomic.AddUint64(&totalRequestCount, 1)
+
   response.Header()["Cache-Control"] = []string{"private, max-age=0, no-cache, no-store"}
 
   if noteStatusPathRegexp.MatchString(request.URL.Path) {
@@ -122,6 +145,7 @@ func postNote(response http.ResponseWriter, request *http.Request) {
   defer zeroRequestBuffer(request)
 
   if request.ContentLength > int64(mainStore.MaxSecretSize) {
+    atomic.AddUint64(&noteTooLargeRequestCount, 1)
     respondSecretTooLarge(response)
     return
   }
@@ -133,12 +157,15 @@ func postNote(response http.ResponseWriter, request *http.Request) {
   code, err := mainStore.Save(request.Body, id)
 
   if err == store.SecretTooLarge {
+    atomic.AddUint64(&noteTooLargeRequestCount, 1)
     respondSecretTooLarge(response)
     return
   } else if err == store.DuplicateId {
+    atomic.AddUint64(&noteDuplicateIdRequestCount, 1)
     respondDuplicateId(response)
     return
   } else if err == store.StorageFull {
+    atomic.AddUint64(&noteStorageFullRequestCount, 1)
     respondStorageFull(response)
     return
   } else if err != nil {
@@ -147,6 +174,7 @@ func postNote(response http.ResponseWriter, request *http.Request) {
     return
   }
 
+  atomic.AddUint64(&notesCreatedCount, 1)
   response.Header().Set("X-Note-Code", code)
   response.WriteHeader(http.StatusCreated) // 201
 }
@@ -162,12 +190,15 @@ func getNote(response http.ResponseWriter, request *http.Request) {
   nRead, code, err := mainStore.Retrieve(id, buf)
 
   if err == store.SecretAlreadyAccessed {
+    atomic.AddUint64(&noteAlreadyOpenedRequestCount, 1)
     response.WriteHeader(http.StatusForbidden) // 403
     return
   } else if err == store.SecretExpired {
+    atomic.AddUint64(&noteExpiredRequestCount, 1)
     response.WriteHeader(http.StatusGone) // 410
     return
   } else if err == store.SecretNotFound {
+    atomic.AddUint64(&noteNotFoundCount, 1)
     response.WriteHeader(http.StatusNotFound) // 404
     return
   } else if err != nil {
@@ -176,6 +207,7 @@ func getNote(response http.ResponseWriter, request *http.Request) {
     return
   }
 
+  atomic.AddUint64(&notesOpenedCount, 1)
   response.Header().Set("Content-Type", "application/octet-stream")
   response.Header().Set("X-Note-Code", code)
   response.WriteHeader(http.StatusOK) // 200
@@ -184,6 +216,8 @@ func getNote(response http.ResponseWriter, request *http.Request) {
 }
 
 func getNoteStatus(response http.ResponseWriter, request *http.Request) {
+  atomic.AddUint64(&statusRequestCount, 1)
+
   parts := noteStatusPathRegexp.FindStringSubmatch(request.URL.Path)
 
   id := parts[1]
@@ -225,6 +259,8 @@ func getNoteStatus(response http.ResponseWriter, request *http.Request) {
 }
 
 func freeSpace(response http.ResponseWriter, request *http.Request) {
+  atomic.AddUint64(&totalRequestCount, 1)
+
   response.Header()["Cache-Control"] = []string{"private, max-age=0, no-cache, no-store"}
 
   switch request.Method {
