@@ -3,6 +3,7 @@ package main
 import (
   "bufio"
   "github.com/brianhempel/sneakynote.com/store"
+  "fmt"
   "log"
   "mime"
   "net/http"
@@ -27,6 +28,8 @@ func Handlers() *http.ServeMux {
 
   publicDir := http.Dir(publicPath())
   mux.Handle("/", Cache1Day(MaybeGzip(publicDir, http.FileServer(publicDir))))
+
+  mux.HandleFunc("/free_space", freeSpace)
 
   mux.HandleFunc("/notes/", note)
 
@@ -219,6 +222,15 @@ func getNoteStatus(response http.ResponseWriter, request *http.Request) {
   }
 
   response.WriteHeader(http.StatusOK) // 200
+}
+
+func freeSpace(response http.ResponseWriter, request *http.Request) {
+  response.Header()["Cache-Control"] = []string{"private, max-age=0, no-cache, no-store"}
+
+  switch request.Method {
+  case "GET": response.Write([]byte(fmt.Sprintf("%.3f MB\n", float64(mainStore.AvailableMemory()) / 1024.0 / 1024.0)))
+  default: http.NotFoundHandler().ServeHTTP(response, request)
+  }
 }
 
 // Root director for static files.

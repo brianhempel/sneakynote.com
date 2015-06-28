@@ -1039,3 +1039,25 @@ func TestGetNoteStatusLongPoll(t *testing.T) {
     t.Errorf("Expected status 403, got %d", response.StatusCode)
   }
 }
+
+func TestGetFreeSpace(t *testing.T) {
+  testServer := httptest.NewServer(main.Handlers())
+  defer testServer.Close()
+
+  response, err := http.Get(testServer.URL + "/free_space")
+
+  if err != nil {
+    t.Error(err)
+  }
+
+  if response.StatusCode != 200 {
+    t.Errorf("Expected status 200, got %d", response.StatusCode)
+  }
+
+  defer response.Body.Close()
+  body, _ := ioutil.ReadAll(response.Body)
+
+  if !strings.Contains(string(body), "MB") {
+    t.Errorf("Expected to find \"MB\" in %s", body)
+  }
+}
