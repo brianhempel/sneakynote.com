@@ -774,7 +774,7 @@ pre > code {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 th,
 td {
-  padding: 12px 8px;
+  padding: 12px 6px;
   text-align: left;
   border-bottom: 1px solid #E1E1E1; }
 th:first-child,
@@ -932,6 +932,7 @@ section.rocky-shoreline-bg {
 
 /* Larger than mobile */
 @media (min-width: 400px) {
+  th, td { padding: 12px 8px; }
 }
 
 /* Larger than phablet (also point when grid becomes active) */
