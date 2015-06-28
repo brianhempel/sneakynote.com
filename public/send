@@ -2,7 +2,9 @@
 <html>
   <head>
     <title>SneakyNote.com: Send Secrets Securely</title>
-    <link rel="icon" type="image/png" href="/images/padlock-small-square.png" />
+    <link rel="icon" type="image/png" href="/images/padlock-small-square.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=500">
     <style>
       html {
         font-size: 62.5%;
