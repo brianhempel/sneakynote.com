@@ -21,7 +21,7 @@ def compress(tmp_path, resized_path, q)
   size
 end
 
-FULLSIZE_PATHS.grep(/bubbles/).each do |fullsize_path|
+FULLSIZE_PATHS.each do |fullsize_path|
   (200..2000).step(200).each do |width|
     resized_path = fullsize_path.sub("-fullsize.", "-#{width}.")
     tmp_path = fullsize_path.sub("-fullsize.jpg", "-tmp.jpg")
