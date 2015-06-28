@@ -21,6 +21,12 @@
 <section>
   <div class="container row center-text">
     <div id="comparisonTableWrapper" class="inline-block">
+      <svg style="display:none;">
+        <symbol id="icon-checkmark" viewBox="0 0 1024 1024">
+        	<title>Checkmark</title>
+        	<path class="path1" d="M864 128l-480 480-224-224-160 160 384 384 640-640z"></path>
+        </symbol>
+      </svg>
       <table class="u-full-width">
         <thead>
           <tr>
@@ -33,27 +39,27 @@
         <tbody>
           <tr>
             <td>Easy</td>
-            <td class="big-mark okay center-text">✔</td>
-            <td class="big-mark good center-text">✔</td>
+            <td class="big-mark okay center-text"><svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark"></use></svg></td>
+            <td class="big-mark good center-text"><svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark"></use></svg></td>
             <td></td>
           </tr>
           <tr>
             <td>Short-lived</td>
             <td></td>
-            <td class="big-mark good center-text">✔</td>
+            <td class="big-mark good center-text"><svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark"></use></svg></td>
             <td></td>
           </tr>
           <tr>
             <td>Verified Delivery</td>
             <td></td>
-            <td class="big-mark good center-text">✔</td>
-            <td class="big-mark okay center-text">✔</td>
+            <td class="big-mark good center-text"><svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark"></use></svg></td>
+            <td class="big-mark okay center-text"><svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark"></use></svg></td>
           </tr>
           <tr>
             <td>Impossible to&nbsp;Intercept</td>
             <td></td>
             <td></td>
-            <td class="big-mark okay center-text">✔</td>
+            <td class="big-mark okay center-text"><svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark"></use></svg></td>
           </tr>
         </tbody>
       </table>

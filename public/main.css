@@ -885,6 +885,16 @@ section {
   padding: 4rem 0;
 }
 
+svg {
+  fill: currentColor;
+}
+
+.icon {
+  height: 1em;
+  width: 1em;
+  display: inline-block;
+}
+
 #subtitle {
   opacity: 0.6;
   line-height: 1.3;

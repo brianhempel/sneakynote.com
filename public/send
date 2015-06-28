@@ -42,9 +42,13 @@
       a:hover {
         color: #0FA0CE;
       }
-      label, textarea, button {
+      label, textarea {
         display: inline-block;
       }
+      svg {
+        fill: currentColor;
+      }
+
       input[type=checkbox] {
         width: 20px;
         height: 20px;
@@ -331,7 +335,7 @@
 
       function noteOpened() {
         byId("noteStatusText").innerHTML = "Opened";
-        byId("noteStatusIcon").innerHTML = "✔";
+        byId("noteStatusIcon").innerHTML = '<svg class="icon icon-checkmark" viewBox="0 0 1024 1024"><path class="path1" d="M864 128l-480 480-224-224-160 160 384 384 640-640z"></path></svg>';
         byId("noteStatusIcon").style.color = "#0a0";
         byId("noteURLStuff").style.display = "none";
         byId("noteCodeStuff").style.display = "block";
