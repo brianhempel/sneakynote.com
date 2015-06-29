@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>A SneakyNote For You - SneakyNote.com: Send Secrets Securely</title>
-    <link rel="icon" type="image/png" href="/images/padlock-small-square.png">
+    <link rel="icon" type="image/png" href="/images/padlock-small-square.png" sizes="64x64">
     <meta charset="utf-8">
     <meta name="robots" content="noindex">
     <meta name="viewport" content="width=500">
@@ -16,6 +16,9 @@
     <meta property="og:image:height" content="512">
     <meta property="og:description" content="Your secret message awaits. It can only be read once.">
     <meta name="description" content="Your secret message awaits. It can only be read once.">
+
+    <link rel="apple-touch-icon" type="image/png" href="/images/padlock-small-square-512.png" sizes="512x512">
+    <link rel="icon" type="image/png" href="/images/padlock-small-square-512.png" sizes="512x512">
 
     <style>
       html {
