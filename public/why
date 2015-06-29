@@ -2,10 +2,20 @@
 <html>
 <head>
   <title>Why Send a SneakyNote? - SneakyNote: Send Secrets Securely</title>
-  <link rel="icon" type="image/png" href="/images/padlock-small-square.png" />
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="stylesheet" href="main.css" />
+  <meta charset="utf-8">
+  <link rel="icon" type="image/png" href="/images/padlock-small-square.png">
+  <link rel="stylesheet" href="main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Why Send a SneakyNote?">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sneakynote.com/why">
+  <meta property="og:site_name" content="SneakyNote.com">
+  <meta property="og:image" content="https://sneakynote.com/images/padlock-small-square-512.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:description" content="Why you might send a message with SneakyNote.com — a free service to send encrypted messages with self-destructing read-once links.">
+  <meta name="description" content="Why you might send a message with SneakyNote.com — a free service to send encrypted messages with self-destructing read-once links.">
 </head>
 <body>
 
