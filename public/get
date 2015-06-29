@@ -219,7 +219,7 @@
         height: 100px;
         font-size: 21px;
         margin: 10px;
-        padding: 0 10px;
+        padding: 0 4px;
       }
       button.good {
         color: #0a0;
