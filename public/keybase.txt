@@ -1,0 +1,72 @@
+https://keybase.io/brianhempel
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://sneakynote.com
+  * I am brianhempel (https://keybase.io/brianhempel) on keybase.
+  * I have a public key with fingerprint 599A 31A4 A090 2699 AA81  9770 110B F56B 2900 4272
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "client": {
+            "name": "keybase.io node.js client",
+            "version": "0.8.8"
+        },
+        "key": {
+            "fingerprint": "599a31a4a0902699aa819770110bf56b29004272",
+            "host": "keybase.io",
+            "key_id": "110bf56b29004272",
+            "uid": "7517ad6bb04df14a94f7da0c12e47819",
+            "username": "brianhempel"
+        },
+        "service": {
+            "hostname": "sneakynote.com",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1436308024,
+    "expire_in": 157680000,
+    "prev": "3c57655d249f9d9160b798cd523ad4f6a20090126c71fdbda2441085f7938387",
+    "seqno": 5,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Comment: GPGTools - https://gpgtools.org
+
+owGbwMvMwMUoyP01W5PBqYjx9EHzJIbQOUEW1UpJ+SmVSlbVSsk5mal5JSBWXmJu
+qpKVUnZqZVJicapeZr5CXn5Kql5WsQJUjY5SWWpRcWZ+HlCVgZ6FnoVSrQ5IOUhz
+WmZeempRQVEmyCwlU0vLRGPDRJNEA0sDIzMgJ9HC0NLc3MDQ0CApzdQsycjSwMDE
+yNwIaGRGfnEJiq1KYDPjM1OAoljUl4IlzE0NzRNTzJKSDExS0gxNEi1N0sxTEg2S
+DY1STcyBdoEUFqcWQb2UVJSZmJeRmluQmgNyMlCiLDM5FeRskO1QRcV5qYnZlXn5
+Jal6yfm5QAMKivJL8pPzc4ByGSUlBcVWIL0llQUgxeWpSfFQY+KTMvNSgL5HDh5D
+oMrkkkyQuYYmxmbGBhYGRiY6SqkVBZlFqfGZIBWm5mYWBkAAsie1DGikcTJQyNQ0
+xcjEMs0yxdLQzCDJ3NIiOcXUyDgxxSTNLNHIABiahkZmyeaGaSlJKYlGJiaGBham
+aeaWxhbGFuZKII8V5uUrWZkCnZmYDvJSZnpeYklpUapSbSeTDAsDIxcDGysTKP4Z
+uDgFYKligy///9iJBXtijecUeoRW3mW/a8/6qKnj6ZGQHReMgg8Vnejc8sP1661S
+o8UCbXuDVnNxlC550TA7freNucfMOx6Owbnv717Rcjec6uRp/23TfOekO/neFTmu
+mQbhmy5O26z7aVGAdbTu5uSXUqtjN7N90driwCVtpud/h+tx88Wa3RpzbnbrfKu/
+buS1TW/N1kMiebN2PjFUXrx6bcp3Py295QarPZhUBCzvBkuYL3Rd37XukLYqp9Dy
+Jk8+pZazgS0zj1lz3gh7HGfSOCHyCN/CL+y+Il9F65/uLL/qtd2Od/HUI49sWyft
+rVjoeZozffvkcyrPPXj/7HokqGgxrVPlzmzbV6fjppw+ba/brfbarvxC7FEO+WX/
+3eZzHQpKm5TEbawdcYTLSPprl+c8xU9Oz58m3LZlv3XptFlOiSGDw8aiM2f2ZrLI
+XGkIajzU76N4wvybu8GLb5fW7Digd9q/n6k+6PYDNYENE/b8L/3qNM8vxnLxPyeD
+O2mPNmt8MWfdFXV2lmHmPrl1nHl2Sj/Cwt6tYXoS9PiP+aoYab22iXxlJYfONkZr
+LOk83LXd5RnjX0WHa8dL1m+puCD6peTSY8snnv98T5+eVBoT/IalvSbpWdPDgHma
+GSdPyfiv1dmyx/V/+9PVFx/Kpcd0eAbGLRarjNtU8Uk731xu0iLmxXvbnTat/ure
+nlKVdrT/3ydmtYgHQS7xL6aFqR56BgA=
+=BnA8
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/brianhempel
+
