@@ -162,6 +162,7 @@ func postNote(response http.ResponseWriter, request *http.Request) {
     return
   } else if err == store.DuplicateId {
     atomic.AddUint64(&noteDuplicateIdRequestCount, 1)
+    log.Print("Duplicate ID User Agent: ", request.UserAgent())
     respondDuplicateId(response)
     return
   } else if err == store.StorageFull {
