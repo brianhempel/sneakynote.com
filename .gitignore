@@ -5,3 +5,4 @@ sneakynote.com.csr
 certificates/
 public/log.txt
 *.pid
+letsencrypt/
