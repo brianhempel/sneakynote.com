@@ -10,8 +10,13 @@ while true; do
       mkdir -p letsencrypt/config
       mkdir -p letsencrypt/work
       mkdir -p letsencrypt/logs
-      # Start script will kill this script
-      certbot certonly --noninteractive --config-dir letsencrypt/config --work-dir letsencrypt/work --logs-dir letsencrypt/logs --webroot --webroot-path public/ -d sneakynote.com && sudo ./start.sh &
+      certbot certonly --force-renewal --noninteractive --config-dir letsencrypt/config --work-dir letsencrypt/work --logs-dir letsencrypt/logs --webroot --webroot-path public/ -d sneakynote.com
+
+      # Successfull renewal??
+      if [ "$(( $(date +"%s") - $(stat -L -c "%Z" "letsencrypt/config/live/sneakynote.com/fullchain.pem") ))" -le "6912000" ];
+        # Start script will kill this script
+        sudo ./start.sh &
+      fi
     fi
   fi
 
